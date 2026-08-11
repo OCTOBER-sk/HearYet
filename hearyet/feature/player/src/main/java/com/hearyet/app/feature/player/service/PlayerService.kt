@@ -82,7 +82,6 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.guava.future
@@ -698,7 +697,6 @@ class PlayerService : MediaSessionService() {
             // and a replacement session can't leave the collector glued to the stale handle.
             serviceScope.launch {
                 SessionHolder.activeFlow
-                    .distinctUntilChanged()
                     .flatMapLatest { session ->
                         session?.sessionState ?: flowOf(null)
                     }

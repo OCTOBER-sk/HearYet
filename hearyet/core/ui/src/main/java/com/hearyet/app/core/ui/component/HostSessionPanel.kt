@@ -141,6 +141,7 @@ fun HostSessionPanel(
             Spacer(modifier = Modifier.height(Spacing.md))
 
             sessionCode?.let { code ->
+                @Suppress("DEPRECATION")
                 val clipboardManager = LocalClipboardManager.current
 
                 Column(
