@@ -142,6 +142,15 @@ class ClockSyncManager(
      *  BE §10.1 — lets the guest reset its HOST_UNREACHABLE timer. */
     var onHostActivity: (() -> Unit)? = null
 
+    /**
+     * H-3 — called with the refreshed offset whenever a background re-sync batch
+     * (BE §5 crystal-drift correction) converges. The SessionCoordinator wires
+     * this to [PresentationScheduler.updateClockOffset] so the live scheduler's
+     * target computation picks up the new offset instead of discarding it.
+     * Invoked on the background re-sync thread.
+     */
+    var onBackgroundResync: ((offsetNanos: Double) -> Unit)? = null
+
     // ── Guest: initiate a sync batch ────────────────────────────────
 
     /**
@@ -321,6 +330,9 @@ class ClockSyncManager(
                 performSyncBatch(hostEndpointId) { offsetNanos, stddevMs ->
                     if (offsetNanos >= 0) {
                         Log.d(TAG, "Background re-sync: offset=${"%.3f".format(offsetNanos / 1_000_000.0)}ms stddev=${"%.3f".format(stddevMs)}ms")
+                        // H-3 — deliver the refreshed offset to the live scheduler
+                        // instead of discarding it (BE §5 crystal-drift correction).
+                        onBackgroundResync?.invoke(offsetNanos)
                     }
                 }
             }

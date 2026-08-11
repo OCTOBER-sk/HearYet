@@ -58,6 +58,8 @@ fun InSessionHostScreen(
     onLeaveScreen: () -> Unit,
     modifier: Modifier = Modifier,
     qrPayload: String? = null,
+    // H-4 — true while the Host's media is paused (session stays live).
+    isPaused: Boolean = false,
 ) {
     var showSessionPanel by remember { mutableStateOf(false) }
     var showEndConfirmation by remember { mutableStateOf(false) }
@@ -150,8 +152,11 @@ fun InSessionHostScreen(
                         if (guests.isNotEmpty()) {
                             Spacer(modifier = Modifier.size(Spacing.sm))
                         }
-                        // Aggregate sync health — worst connected guest (§9.6)
-                        val aggregateHealth = guests.minByOrNull { it.syncHealth.ordinal }?.syncHealth
+                        // Aggregate sync health — worst connected guest (§9.6).
+                        // GOOD=0 < DEGRADED=1 < POOR=2, so maxByOrNull picks the
+                        // worst guest: the pill must reflect the weakest link, not
+                        // the healthiest one (M-4).
+                        val aggregateHealth = guests.maxByOrNull { it.syncHealth.ordinal }?.syncHealth
                             ?: SyncHealth.GOOD
                         SyncHealthDot(health = aggregateHealth)
                         Text(
@@ -194,6 +199,7 @@ fun InSessionHostScreen(
             guests = guests,
             qrBitmap = qrBitmap,
             sessionStartedAtMs = sessionStartedAtMs,
+            isPaused = isPaused,
             onDismiss = { showSessionPanel = false },
             onEndSession = {
                 showSessionPanel = false

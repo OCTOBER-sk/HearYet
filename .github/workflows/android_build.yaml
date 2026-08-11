@@ -1,0 +1,57 @@
+name: Android Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    working-directory: hearyet
+
+jobs:
+  build:
+    name: Build apk and run tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Set Up JDK 17
+        uses: actions/setup-java@v5
+        with:
+          java-version: 17
+          distribution: temurin
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v6
+        with:
+          validate-wrappers: true
+          gradle-home-cache-cleanup: true
+
+      - name: Build Project with gradle
+        run: ./gradlew assembleDebug
+
+      - name: Run Local Tests
+        run: ./gradlew test
+
+      - name: Lint Checks
+        run: ./gradlew ktlintCheck
+
+      - name: Upload debug APK
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: hearyet-universal-debug.apk
+          path: hearyet/app/build/outputs/apk/debug/app-universal-debug.apk
+
+      - name: Upload build reports
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: build-reports
+          path: hearyet/app/build/reports

@@ -127,4 +127,46 @@ class PresentationSchedulerBehaviorTest {
         scheduler.seedFromNow()
         assertEquals(0, scheduler.bufferSize)
     }
+
+    @Test
+    fun onChunkReceived_keepsBufferBounded_droppingOldest() {
+        // H-6 — no start(): nothing drains the buffer, exactly like a stalled
+        // AudioTrack whose WRITE_NON_BLOCKING writes return 0 while the host keeps
+        // sending ~50 chunks/s. The ring buffer must stay capped, never growing
+        // memory without bound.
+        repeat(PresentationScheduler.MAX_BUFFERED_CHUNKS * 2) { i ->
+            scheduler.onChunkReceived(
+                chunk(System.nanoTime() + i * 20_000_000L, i.toLong()),
+            )
+        }
+
+        assertEquals(PresentationScheduler.MAX_BUFFERED_CHUNKS, scheduler.bufferSize)
+        // Exactly one drop per insert beyond the cap — the oldest chunk each time.
+        assertEquals(PresentationScheduler.MAX_BUFFERED_CHUNKS.toLong(), scheduler.chunksDropped)
+    }
+
+    @Test
+    fun flush_clearsBufferBeforeResumingPlay_noStaleChunkCanSurvive() {
+        assertTrue(scheduler.openAudioTrack())
+        scheduler.start()
+
+        // Feed far-future chunks (nothing is due, so they stay buffered — the
+        // stalled-drain scenario from H-6).
+        repeat(50) { i ->
+            scheduler.onChunkReceived(
+                chunk(System.nanoTime() + 1_000_000_000_000L + i * 20_000_000L, i.toLong()),
+            )
+        }
+        assertEquals(50, scheduler.bufferSize)
+
+        // M-2 — flush must clear the buffer BEFORE play() resumes: the moment
+        // flush returns, the buffer is already empty and the track is playing,
+        // so the woken playback thread can never write a stale pre-flush chunk.
+        scheduler.flush()
+        assertEquals(0, scheduler.bufferSize)
+        assertEquals(0L, scheduler.chunksPlayed)
+        assertTrue(scheduler.isRunning)
+        assertTrue(scheduler.isAudioTrackReady)
+        assertTrue(scheduler.getAudioTrack()?.playState == android.media.AudioTrack.PLAYSTATE_PLAYING)
+    }
 }

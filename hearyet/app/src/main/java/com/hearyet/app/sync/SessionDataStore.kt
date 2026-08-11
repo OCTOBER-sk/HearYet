@@ -8,7 +8,6 @@ import androidx.datastore.dataStoreFile
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
@@ -19,8 +18,9 @@ import kotlinx.serialization.json.Json
  * [com.hearyet.app.transport.ControlMessage.RejoinRequest] after a process death,
  * and so the navigation graph can route correctly on cold start.
  *
- * DataStore is asynchronous, but the coordinator's call sites are synchronous;
- * reads/writes are tiny and funneled through [runBlocking]. Cleared on
+ * All methods are [suspend] — the actual disk I/O runs on DataStore's own
+ * IO scope and the calling coroutine merely suspends, so no `runBlocking`
+ * ever blocks a calling (usually main) thread (H-2). Cleared on
  * `SessionState.Ended` or explicit leave (BE §10.2).
  */
 class SessionDataStore(context: Context) {
@@ -30,25 +30,21 @@ class SessionDataStore(context: Context) {
     // ── Read ─────────────────────────────────────────────────────────
 
     /** Returns the stored string for [key], or null if absent. */
-    fun getString(key: String): String? = runBlocking {
-        dataStore.data.first().values[key]
-    }
+    suspend fun getString(key: String): String? = dataStore.data.first().values[key]
 
     // ── Write ────────────────────────────────────────────────────────
 
     /** Stores [value] under [key].  Pass null to remove the key. */
-    fun putString(key: String, value: String?) {
-        runBlocking {
-            dataStore.updateData { current ->
-                val updated = if (value == null) current.values - key else current.values + (key to value)
-                SessionPrefs(updated)
-            }
+    suspend fun putString(key: String, value: String?) {
+        dataStore.updateData { current ->
+            val updated = if (value == null) current.values - key else current.values + (key to value)
+            SessionPrefs(updated)
         }
     }
 
     /** Clears all persisted session state. */
-    fun clear() {
-        runBlocking { dataStore.updateData { SessionPrefs() } }
+    suspend fun clear() {
+        dataStore.updateData { SessionPrefs() }
     }
 
     // ── Keys ─────────────────────────────────────────────────────────

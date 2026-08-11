@@ -29,7 +29,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-// flow.first import removed — tryRestoreSession uses synchronous SessionDataStore reads (BE §10.2)
+// flow.first import removed — tryRestoreSession uses suspend SessionDataStore reads (BE §10.2)
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -60,6 +60,12 @@ class SessionCoordinator(
 
         // Discovery timeout per §3 trigger map (DISCOVERY_FAILED)
         private const val DISCOVERY_TIMEOUT_MS = 15_000L
+
+        // M-3 — guest handshake timeout (BE §4): a host that accepted the
+        // connection but never answers SessionHandshake must not strand the
+        // guest in ClockSyncing forever. 12s sits inside the 10–15s band used
+        // by the other guest timeouts (discovery 15s, host-unreachable 15s).
+        private const val HANDSHAKE_TIMEOUT_MS = 12_000L
     }
 
     // ── Scope ─────────────────────────────────────────────────────────
@@ -90,6 +96,14 @@ class SessionCoordinator(
     @Volatile
     private var lastKnownPlaybackPositionMs: Long = 0L
 
+    /**
+     * H-4 — the isPlaying flag of the most recent PlaybackState (defaults to true).
+     * Used so a sync pipeline that comes up while the host is paused settles into
+     * [SessionState.Paused] instead of claiming Connected/Playing.
+     */
+    @Volatile
+    private var lastPlaybackStatePlaying: Boolean = true
+
     // C10.6 — Persisted state for rejoin (BE §10.2)
     @Volatile
     private var previousEndpointId: String? = null
@@ -103,6 +117,14 @@ class SessionCoordinator(
     private var greetIdentity: String? = null
 
     /**
+     * H-2 — the persisted greeted identity read on the restore-rejoin path. Read
+     * suspend-ly in [performRestoredGuestRejoin] (which runs inside the nav graph's
+     * coroutine) so [startGuestDiscovery] can seed [GuestGreetingManager] synchronously
+     * without a blocking DataStore read on the calling thread.
+     */
+    private var stashedGreetedIdentity: String? = null
+
+    /**
      * BE §4/§10.2 — staged by [performRestoredGuestRejoin] before discovery starts and
      * consumed by the connection-result handler in [startGuestDiscovery], which sends
      * [ControlMessage.RejoinRequest] immediately after the fresh connection succeeds so
@@ -114,6 +136,13 @@ class SessionCoordinator(
     /** BE §4 — true while waiting for the host to confirm the sessionId handshake. */
     @Volatile
     private var awaitingSessionHandshake: Boolean = false
+
+    /**
+     * M-3 — the handshake-timeout coroutine armed when [awaitingSessionHandshake]
+     * goes true. Cancelled on ack, on retry ([resetToIdle]), and on [teardown]
+     * so a stale timer can never fire into a newer attempt.
+     */
+    private var handshakeJob: Job? = null
 
     // ── Transport ─────────────────────────────────────────────────────
 
@@ -317,14 +346,16 @@ class SessionCoordinator(
             // BE §6 backpressure — create per-guest outbound queue + sender thread
             startGuestAudioSender(endpointId)
 
-            // C10.3 — Latecomer seeding: if host is already playing, send
-            // PlaybackState immediately to seed the new guest's scheduler (BE §4, §7)
-            if (currentState is SessionState.Playing) {
+            // C10.3 — Latecomer seeding: if host is already playing (or paused), send
+            // PlaybackState immediately to seed the new guest's scheduler (BE §4, §7).
+            // H-4 — a paused host seeds the latecomer with isPlaying=false so the
+            // guest does not start playing into a paused session.
+            if (currentState is SessionState.Playing || currentState is SessionState.Paused) {
                 Log.d(TAG, "Host: latecomer join — sending PlaybackState to $endpointId")
                 transport.sendControlMessage(
                     endpointId,
                     ControlMessage.PlaybackState(
-                        isPlaying = true,
+                        isPlaying = currentState is SessionState.Playing,
                         positionMs = currentState.positionMs,
                         sharedClockTimestampNanos = System.nanoTime(),
                     ),
@@ -360,7 +391,9 @@ class SessionCoordinator(
         SessionHolder.active = this
 
         // C10.6 — Persist session identity for rejoin across restart (BE §10.2)
-        saveSessionState()
+        // H-2 — suspend write off the calling thread; the six sequential writes stay
+        // sequential inside the single IO coroutine.
+        scope.launch(Dispatchers.IO) { saveSessionState() }
 
         // C10.4 — Start heartbeat to keep guests aware of host liveness (BE §10.1)
         startHeartbeat()
@@ -373,7 +406,8 @@ class SessionCoordinator(
         if (role != SessionRole.Host) return
         transport.broadcastControlMessage(ControlMessage.SessionEnded)
         stopHeartbeat()
-        clearSessionState()
+        // H-2 — suspend clear off the calling (UI) thread.
+        scope.launch(Dispatchers.IO) { clearSessionState() }
         teardown()
         _sessionState.value = SessionState.Ended
     }
@@ -392,10 +426,33 @@ class SessionCoordinator(
     override fun onHostPlayPause(isPlaying: Boolean, positionMs: Long) {
         if (role != SessionRole.Host) return
         broadcastPlaybackState(isPlaying, positionMs)
-        // Update host's own observable state so the In-Session UI reflects current position
-        if (isPlaying) {
-            _sessionState.value = SessionState.Playing(positionMs)
+        // H-4 — model the paused session explicitly so the host UI (and the
+        // session state machine) reflects a pause instead of always "Playing".
+        _sessionState.value = if (isPlaying) {
+            SessionState.Playing(positionMs)
+        } else {
+            SessionState.Paused(positionMs)
         }
+    }
+
+    /**
+     * H-5 — Host-only: the player was stopped or its media ended. The PCM tap is
+     * about to be destroyed, so the session can no longer stream: broadcast
+     * SessionEnded (guests leave the silent 'Playing'/'Paused' state) and end the
+     * host session cleanly. Guarded on state so the double notification
+     * (STATE_ENDED from the activity + END_OF_MEDIA_ITEM from the service) is a
+     * no-op the second time. Distinct from a pause (H-4): this ends the session.
+     */
+    override fun onHostMediaEnded() {
+        if (role != SessionRole.Host) return
+        val state = _sessionState.value
+        if (state !is SessionState.Playing &&
+            state !is SessionState.Paused &&
+            state !is SessionState.Advertising &&
+            state !is SessionState.WaitingForMedia
+        ) return
+        Log.d(TAG, "Host: player stopped / media ended — ending session")
+        endSession()
     }
 
     /** BE §4/§7 — broadcast the current playback state to every connected guest. */
@@ -493,12 +550,14 @@ class SessionCoordinator(
                     }
                 }
                 val currentState = _sessionState.value
-                if (currentState is SessionState.Playing) {
+                if (currentState is SessionState.Playing || currentState is SessionState.Paused) {
+                    // H-4 — re-seed with the actual playing state: a paused host must
+                    // not start the rejoined guest's audio.
                     Log.d(TAG, "Host: re-seeding rejoined guest $endpointId at ${currentState.positionMs}ms")
                     transport.sendControlMessage(
                         endpointId,
                         ControlMessage.PlaybackState(
-                            isPlaying = true,
+                            isPlaying = currentState is SessionState.Playing,
                             positionMs = currentState.positionMs,
                             sharedClockTimestampNanos = System.nanoTime(),
                         ),
@@ -634,9 +693,9 @@ class SessionCoordinator(
             // BE §14.4.2/§17.13 — a restore rejoin must not be re-greeted: seed the
             // in-memory greeted set with the identity persisted when the chime first
             // played this session (SessionDataStore survives process death).
-            guestGreetingManager?.seedGreetedIdentity(
-                sessionPrefs.getString(SessionDataStore.KEY_GREETED_IDENTITY)
-            )
+            // H-2 — the value was already read suspend-ly by performRestoredGuestRejoin
+            // (the only path that sets pendingRejoinRequest), so no blocking read here.
+            guestGreetingManager?.seedGreetedIdentity(stashedGreetedIdentity)
         }
         guestGreetingManager?.preload()
 
@@ -671,8 +730,9 @@ class SessionCoordinator(
                 }
 
                 // C10.6 — Persist session identity for rejoin across restart (BE §10.2)
+                // H-2 — suspend write off the calling (transport callback) thread.
                 previousEndpointId = connectedHostEndpointId
-                saveSessionState()
+                scope.launch(Dispatchers.IO) { saveSessionState() }
 
                 // BE §14.3 — the first connection ID of the session becomes its greet
                 // identity (the restore-rejoin path already staged the persisted prevId
@@ -705,15 +765,32 @@ class SessionCoordinator(
                 if (expectedSessionId != null) {
                     awaitingSessionHandshake = true
                     transport.sendControlMessage(hostId, ControlMessage.SessionHandshake(expectedSessionId))
+                    // M-3 — a host that accepts the connection but never sends
+                    // SessionHandshakeAck must not strand the guest in ClockSyncing
+                    // forever (no clock batch starts in this state, so no SYNC_TIMEOUT
+                    // would ever fire). Time out → clean CONNECTION_FAILED via the
+                    // H-7 teardown path (same as connection failure).
+                    handshakeJob?.cancel()
+                    handshakeJob = scope.launch {
+                        delay(HANDSHAKE_TIMEOUT_MS)
+                        if (awaitingSessionHandshake) {
+                            Log.w(TAG, "Guest: session handshake timed out after ${HANDSHAKE_TIMEOUT_MS}ms")
+                            teardown()
+                            _sessionState.value = SessionState.Error(SessionError.CONNECTION_FAILED)
+                        }
+                    }
                 } else {
                     startGuestSyncPipeline(hostId)
                 }
             } else {
                 Log.w(TAG, "Guest: connection failed")
-                // Clean any stale half-open connection so the next Join retry can't
-                // hit Nearby status 8003 (ALREADY_CONNECTED_TO_ENDPOINT).
-                connectedHostEndpointId?.let { transport.disconnect(it) }
-                connectedHostEndpointId = null
+                // H-1/H-7 — full teardown on this terminal failure: stops the
+                // heartbeat watchdog (so it can't overwrite this error with a stale
+                // HOST_UNREACHABLE ~15s later), releases guest resources (greeting
+                // SoundPool, sync pipeline), and unbinds transport callbacks. It also
+                // disconnects any stale half-open connection so the next Join retry
+                // can't hit Nearby status 8003 (ALREADY_CONNECTED_TO_ENDPOINT).
+                teardown()
                 _sessionState.value = SessionState.Error(SessionError.CONNECTION_FAILED)
             }
         }
@@ -778,12 +855,15 @@ class SessionCoordinator(
                 } else {
                     Log.w(TAG, "Guest sync failed to converge: stddev=${"%.3f".format(stddevMs)}ms")
                     scope.launch(Dispatchers.Main) {
-                        // Clean up the half-started connection so a retry starts fresh —
-                        // leaving it connected makes the next Join hit Nearby status 8003
-                        // (ALREADY_CONNECTED_TO_ENDPOINT) and "Try again" can never succeed.
-                        connectedHostEndpointId?.let { transport.disconnect(it) }
-                        connectedHostEndpointId = null
-                        transport.onAudioChunkReceived = null
+                        // H-1/H-7 — full teardown on this terminal failure: stops the
+                        // heartbeat watchdog (which would otherwise fire a stale
+                        // HOST_UNREACHABLE ~15s after the last ClockSyncResponse and
+                        // overwrite this error, killing the retry button), releases
+                        // guest resources (greeting SoundPool, sync pipeline), and
+                        // unbinds transport callbacks. Also disconnects the half-started
+                        // connection so the next Join retry starts fresh and can't hit
+                        // Nearby status 8003 (ALREADY_CONNECTED_TO_ENDPOINT).
+                        teardown()
                         _sessionState.value = SessionState.Error(SessionError.SYNC_TIMEOUT)
                     }
                 }
@@ -801,6 +881,9 @@ class SessionCoordinator(
 
         if (presentationScheduler?.openAudioTrack() != true) {
             Log.e(TAG, "Guest: failed to open AudioTrack")
+            // H-7 — terminal failure: release guest resources and stop the
+            // heartbeat watchdog so it can't overwrite this error later.
+            teardown()
             _sessionState.value = SessionState.Error(SessionError.DEVICE_INCOMPATIBLE)
             return
         }
@@ -874,15 +957,23 @@ class SessionCoordinator(
         bluetoothRouteManager?.start()
 
         // Start background clock re-sync for crystal drift (BE §5: every 30-60s)
+        // H-3 — wire the background re-sync's refreshed offset into the live
+        // scheduler instead of discarding it (BE §5 crystal-drift correction).
+        // The callback runs on the re-sync thread; updateClockOffset is thread-safe.
+        clockSyncManager?.onBackgroundResync = { offsetNanos ->
+            presentationScheduler?.updateClockOffset(offsetNanos.toLong())
+        }
         clockSyncManager?.startBackgroundResync(hostEndpointId)
 
         // BE §4/§7 — if a PlaybackState (latecomer/rejoin seed or media start) arrived
         // while the clock was still syncing, do not regress the state machine back to
         // Connected: the guest is already Playing and the scheduler is live.
-        _sessionState.value = if (hasReachedPlayingThisSession) {
-            SessionState.Playing(positionMs = lastKnownPlaybackPositionMs)
-        } else {
-            SessionState.Connected(guestCount = 0)
+        // H-4 — a host that paused before/while the pipeline came up keeps the guest
+        // in Paused, never a claiming "Connected"/"Playing" with a live track.
+        _sessionState.value = when {
+            hasReachedPlayingThisSession -> SessionState.Playing(positionMs = lastKnownPlaybackPositionMs)
+            !lastPlaybackStatePlaying -> SessionState.Paused(positionMs = lastKnownPlaybackPositionMs)
+            else -> SessionState.Connected(guestCount = 0)
         }
         Log.d(TAG, "Guest sync pipeline ready — scheduler running, drift monitoring active")
 
@@ -913,7 +1004,8 @@ class SessionCoordinator(
             is ControlMessage.SessionEnded -> {
                 Log.d(TAG, "Guest: SessionEnded received")
                 stopHeartbeat()
-                clearSessionState()
+                // H-2 — suspend clear off the (control-message) calling thread.
+                scope.launch(Dispatchers.IO) { clearSessionState() }
                 guestGreetingManager?.onSessionEnded()
                 hasReachedPlayingThisSession = false
                 _sessionState.value = SessionState.Ended
@@ -922,36 +1014,78 @@ class SessionCoordinator(
             is ControlMessage.PlaybackState -> {
                 val current = _sessionState.value
                 lastKnownPlaybackPositionMs = message.positionMs
-                when {
-                    // Initial entry: transitioning from Connected or ClockSyncing
-                    current is SessionState.Connected ||
-                        current is SessionState.ClockSyncing -> {
-                        _sessionState.value = SessionState.Playing(message.positionMs)
-
-                        // Guest greeting chime — §2.2: fire on FIRST Playing transition only
-                        if (!hasReachedPlayingThisSession) {
-                            hasReachedPlayingThisSession = true
-                            // BE §14.3 — the session-stable rejoin identity, never the raw
-                            // transient endpointId (greetIdentity is captured once per session:
-                            // the persisted prevId on a restore rejoin, the first connection ID
-                            // on a fresh join). Volume comes from guestVolumeState (BE §14.6.4),
-                            // not the system STREAM_MUSIC stream.
-                            val identity = greetIdentity ?: connectedHostEndpointId ?: "unknown"
-                            guestGreetingManager?.maybeGreet(identity, guestVolumeState.current)
-                            // BE §14.4.2/§17.13 — persist the greeted identity so a process
-                            // death + RejoinRequest rejoin is never re-greeted (the in-memory
-                            // set is gone after restart). Cleared with the rest of the session
-                            // state on End/Leave (§14.4.1/§14.4.3).
-                            sessionPrefs.putString(SessionDataStore.KEY_GREETED_IDENTITY, identity)
+                lastPlaybackStatePlaying = message.isPlaying
+                if (!message.isPlaying) {
+                    // H-4 — host paused: pause the guest's AudioTrack so it stops
+                    // draining buffered audio. The scheduler and session stay alive —
+                    // a later PlaybackState(isPlaying=true) resumes. Media END is NOT
+                    // this message: H-5 delivers SessionEnded, which ends the session.
+                    when (current) {
+                        is SessionState.Playing,
+                        is SessionState.Connected,
+                        is SessionState.ClockSyncing,
+                        is SessionState.Paused,
+                        -> {
+                            presentationScheduler?.getAudioTrack()?.pause()
+                            _sessionState.value = SessionState.Paused(message.positionMs)
+                            Log.d(TAG, "Guest: host paused — AudioTrack paused, positionMs=${message.positionMs}")
                         }
+                        else -> { /* Idle/Error/Ended — ignore a pause broadcast for a session we left */ }
                     }
-                    // C12 prep — mid-session pause/resume (BE §7):
-                    // flush the scheduler and re-seed from the new PlaybackState
-                    current is SessionState.Playing -> {
-                        presentationScheduler?.flush()
-                        presentationScheduler?.seedFromNow()
-                        _sessionState.value = SessionState.Playing(message.positionMs)
-                        Log.d(TAG, "Guest: PlaybackState update — flushed scheduler, positionMs=${message.positionMs}")
+                } else {
+                    when (current) {
+                        // Initial entry: transitioning from Connected or ClockSyncing
+                        is SessionState.Connected ||
+                            is SessionState.ClockSyncing -> {
+                            _sessionState.value = SessionState.Playing(message.positionMs)
+
+                            // Guest greeting chime — §2.2: fire on FIRST Playing transition only
+                            if (!hasReachedPlayingThisSession) {
+                                hasReachedPlayingThisSession = true
+                                // BE §14.3 — the session-stable rejoin identity, never the raw
+                                // transient endpointId (greetIdentity is captured once per session:
+                                // the persisted prevId on a restore rejoin, the first connection ID
+                                // on a fresh join). Volume comes from guestVolumeState (BE §14.6.4),
+                                // not the system STREAM_MUSIC stream.
+                                val identity = greetIdentity ?: connectedHostEndpointId ?: "unknown"
+                                guestGreetingManager?.maybeGreet(identity, guestVolumeState.current)
+                                // BE §14.4.2/§17.13 — persist the greeted identity so a process
+                                // death + RejoinRequest rejoin is never re-greeted (the in-memory
+                                // set is gone after restart). Cleared with the rest of the session
+                                // state on End/Leave (§14.4.1/§14.4.3).
+                                // H-2 — suspend write off the (control-message) calling thread.
+                                scope.launch(Dispatchers.IO) {
+                                    sessionPrefs.putString(SessionDataStore.KEY_GREETED_IDENTITY, identity)
+                                }
+                            }
+                        }
+                        // H-4 — host resumed after a pause: unpause the track, then the
+                        // standard flush-and-reseed so the schedule starts from "now".
+                        is SessionState.Paused -> {
+                            Log.d(TAG, "Guest: host resumed — resuming AudioTrack")
+                            presentationScheduler?.getAudioTrack()?.play()
+                            presentationScheduler?.flush()
+                            presentationScheduler?.seedFromNow()
+                            _sessionState.value = SessionState.Playing(message.positionMs)
+                            if (!hasReachedPlayingThisSession) {
+                                hasReachedPlayingThisSession = true
+                                val identity = greetIdentity ?: connectedHostEndpointId ?: "unknown"
+                                guestGreetingManager?.maybeGreet(identity, guestVolumeState.current)
+                                // H-2 — suspend write off the (control-message) calling thread.
+                                scope.launch(Dispatchers.IO) {
+                                    sessionPrefs.putString(SessionDataStore.KEY_GREETED_IDENTITY, identity)
+                                }
+                            }
+                        }
+                        // C12 prep — mid-session pause/resume (BE §7):
+                        // flush the scheduler and re-seed from the new PlaybackState
+                        is SessionState.Playing -> {
+                            presentationScheduler?.flush()
+                            presentationScheduler?.seedFromNow()
+                            _sessionState.value = SessionState.Playing(message.positionMs)
+                            Log.d(TAG, "Guest: PlaybackState update — flushed scheduler, positionMs=${message.positionMs}")
+                        }
+                        else -> { /* Idle/Error/Ended — ignore a playback broadcast for a session we left */ }
                     }
                 }
             }
@@ -986,14 +1120,19 @@ class SessionCoordinator(
                 // payload's sessionId, reject the connection (name-collision guard).
                 if (awaitingSessionHandshake) {
                     awaitingSessionHandshake = false
+                    handshakeJob?.cancel()
+                    handshakeJob = null
                     val expected = sessionId
                     if (expected != null && message.sessionId == expected) {
                         Log.d(TAG, "Guest: session handshake confirmed")
                         startGuestSyncPipeline(connectedHostEndpointId ?: "")
                     } else {
                         Log.w(TAG, "Guest: session handshake mismatch")
+                        // H-1/H-7 — same terminal-failure teardown as connection/sync
+                        // failure: stops the heartbeat watchdog, releases guest resources,
+                        // unbinds transport callbacks, and drops the stale connection.
+                        teardown()
                         _sessionState.value = SessionState.Error(SessionError.CONNECTION_FAILED)
-                        connectedHostEndpointId?.let { transport.disconnect(it) }
                     }
                 }
             }
@@ -1034,8 +1173,14 @@ class SessionCoordinator(
         // - hasReachedPlayingThisSession: prevents stale Playing state on retry
         // - lastKnownPlaybackPositionMs: old position is irrelevant for a fresh connection
         awaitingSessionHandshake = false
+        // M-3 — a pending handshake timer from the failed attempt must not fire
+        // into the retry (it would tear down the fresh attempt mid-discovery).
+        handshakeJob?.cancel()
+        handshakeJob = null
         hasReachedPlayingThisSession = false
         lastKnownPlaybackPositionMs = 0L
+        // H-4 — a fresh attempt starts from "playing" until a PlaybackState says otherwise.
+        lastPlaybackStatePlaying = true
         // A fresh attempt gets a fresh greet identity (a restore-rejoin retry re-stages
         // the persisted prevId in performRestoredGuestRejoin).
         greetIdentity = null
@@ -1150,6 +1295,10 @@ class SessionCoordinator(
         // C11 — Unregister from SessionHolder
         SessionHolder.active = null
         stopHeartbeat()
+        // M-3 — disarm the handshake timeout so a stale timer can never fire
+        // into a session that was already torn down or retried.
+        handshakeJob?.cancel()
+        handshakeJob = null
         // Cancel the initial sync batch job — its blocking body may still be
         // running, but its result callbacks are now gated on isActive (BE §10).
         syncPipelineJob?.cancel()
@@ -1191,6 +1340,7 @@ class SessionCoordinator(
         transport.onError = null
         connectedHostEndpointId = null
         pendingRejoinRequest = null
+        stashedGreetedIdentity = null
     }
 
     /**
@@ -1202,7 +1352,8 @@ class SessionCoordinator(
             _sessionState.value == SessionState.WaitingForMedia
         ) {
             stopHeartbeat()
-            clearSessionState()
+            // H-2 — suspend clear off the calling (UI) thread.
+            scope.launch(Dispatchers.IO) { clearSessionState() }
             teardown()
             _sessionState.value = SessionState.Idle
             Log.d(TAG, "Session creation cancelled")
@@ -1213,7 +1364,8 @@ class SessionCoordinator(
     override fun leaveSession() {
         if (role == SessionRole.Guest) {
             stopHeartbeat()
-            clearSessionState()
+            // H-2 — suspend clear off the calling (UI) thread.
+            scope.launch(Dispatchers.IO) { clearSessionState() }
             guestGreetingManager?.onSessionEnded()
             hasReachedPlayingThisSession = false
             teardown()
@@ -1276,9 +1428,15 @@ class SessionCoordinator(
     // Now backed by DataStore (SessionDataStore) instead of SharedPreferences.
     // ═══════════════════════════════════════════════════════════════════
 
-    private fun saveSessionState() {
-        // BE §10.2 — persisted continuously while a session is active. SessionDataStore
-        // is DataStore-backed with a synchronous surface (tiny reads/writes).
+    /**
+     * H-2 — persist the current session identity (BE §10.2). Suspend: the six
+     * [SessionDataStore] writes stay sequential and run inside the single
+     * coroutine that calls this (DataStore performs the disk I/O on its own
+     * IO scope, so the calling thread is never blocked). Callers launch it on
+     * [Dispatchers.IO] or call it from an already-running coroutine.
+     */
+    private suspend fun saveSessionState() {
+        // BE §10.2 — persisted continuously while a session is active.
         sessionPrefs.putString(SessionDataStore.KEY_SESSION_ID, sessionId)
         sessionPrefs.putString(SessionDataStore.KEY_SESSION_CODE, sessionCode)
         sessionPrefs.putString(SessionDataStore.KEY_ROLE, when (role) {
@@ -1292,11 +1450,12 @@ class SessionCoordinator(
 
     /**
      * BE §10.2 — restore persisted session on app restart.
-     * Reads are synchronous (DataStore read is tiny and runBlocking-funneled).
+     * H-2 — suspend: the six reads suspend on DataStore's IO scope instead of
+     * blocking the calling thread. Called from the Home entry's LaunchedEffect
+     * (a coroutine) in HearYetNavGraph.
      * Returns true if a persisted Guest session was found.
      */
-    fun tryRestoreSession(): Boolean {
-        // SessionDataStore.getString() is synchronous — no coroutine/Flow needed.
+    suspend fun tryRestoreSession(): Boolean {
         val savedRole = sessionPrefs.getString(SessionDataStore.KEY_ROLE) ?: return false
 
         role = when (savedRole) {
@@ -1319,8 +1478,11 @@ class SessionCoordinator(
      * Guest-only: after restore, start discovery for the saved host and
      * send a [RejoinRequest] once connected (BE §10.2 reconnect path).
      * Host path: clear persisted state and return false (no silent resume).
+     * H-2 — suspend: reads the persisted greeted identity off the calling
+     * coroutine so [startGuestDiscovery] can seed the greeting manager
+     * synchronously without a blocking DataStore read.
      */
-    fun performRestoredGuestRejoin(): Boolean {
+    suspend fun performRestoredGuestRejoin(): Boolean {
         if (role != SessionRole.Guest) {
             // Host cannot silently resume after process death (BE §10.2) — its playback
             // state is gone. Clear persisted state and route to Home.
@@ -1347,14 +1509,20 @@ class SessionCoordinator(
             // previousEndpointId with the new connection ID as soon as it runs).
             greetIdentity = prevId
             pendingRejoinRequest = prevId to displayName
+            // H-2 — read the persisted greeted identity here (suspend, in the caller's
+            // coroutine) so startGuestDiscovery seeds the greeting manager synchronously.
+            stashedGreetedIdentity = sessionPrefs.getString(SessionDataStore.KEY_GREETED_IDENTITY)
         }
 
         startGuestDiscovery(hostName)
         return true
     }
 
-    /** BE §10.2 — clear all persisted session state. Accessible from nav graph. */
-    fun clearSessionState() {
+    /**
+     * BE §10.2 — clear all persisted session state. Accessible from nav graph.
+     * H-2 — suspend: DataStore performs the disk I/O on its own IO scope.
+     */
+    suspend fun clearSessionState() {
         sessionPrefs.clear()
     }
 

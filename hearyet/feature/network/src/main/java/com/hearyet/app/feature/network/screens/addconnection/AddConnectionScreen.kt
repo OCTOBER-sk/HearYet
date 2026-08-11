@@ -31,6 +31,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -100,7 +101,10 @@ internal fun AddConnectionScreen(
     var port by rememberSaveable { mutableStateOf("") }
     var path by rememberSaveable { mutableStateOf(defaultPathFor(NetworkProtocol.SMB)) }
     var username by rememberSaveable { mutableStateOf("") }
-    var password by rememberSaveable { mutableStateOf("") }
+    // H-8 — the password must not survive into the saved-instance-state Bundle
+    // (written to disk by the OS): plain `remember` keeps it for the composition's
+    // lifetime only, so a process death never persists the raw credential.
+    var password by remember { mutableStateOf("") }
     var useHttps by rememberSaveable { mutableStateOf(false) }
 
     val focusManager = LocalFocusManager.current

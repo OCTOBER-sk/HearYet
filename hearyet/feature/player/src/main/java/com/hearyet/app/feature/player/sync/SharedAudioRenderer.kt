@@ -80,10 +80,19 @@ class SharedAudioRenderer : BaseAudioProcessor() {
             }
 
             var offset = 0
+            // M-1 — stamp each frame with its own capture time: the n-th frame in this
+            // buffer is n·frameDuration later than the buffer's tap time. Without this,
+            // every frame of a multi-frame buffer is stamped within microseconds of the
+            // same instant while representing hundreds of ms of audio — the guest
+            // scheduler then targets them all at once and late/overflow frames get
+            // dropped (stutter on large upstream buffers).
+            val tapTimeNanos = System.nanoTime()
+            val frameDurationNanos = FRAME_DURATION_MS * 1_000_000L
             while (offset + frameBytes <= combined.size) {
+                val frameIndex = offset / frameBytes
                 listener(
                     AudioChunk(
-                        hostTimestampNanos = System.nanoTime(),
+                        hostTimestampNanos = tapTimeNanos + frameIndex * frameDurationNanos,
                         sequenceNumber = sequenceNumber++,
                         pcmPayload = combined.copyOfRange(offset, offset + frameBytes),
                     ),

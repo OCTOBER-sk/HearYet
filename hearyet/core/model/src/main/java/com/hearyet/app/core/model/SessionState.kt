@@ -22,6 +22,14 @@ sealed class SessionState {
     data class Playing(val positionMs: Long) : SessionState()
 
     /**
+     * H-4 — the Host has paused playback (or a Guest mirrored that pause).
+     * Distinct from [Playing] (the session and pipeline stay alive, the guest's
+     * AudioTrack is paused) and from [Ended] (media-end is delivered as
+     * [SessionState.Ended], never as this state — H-5).
+     */
+    data class Paused(val positionMs: Long) : SessionState()
+
+    /**
      * [reason] is the user-facing category; [detail] carries the underlying
      * technical cause when one is known (e.g. the Nearby/Play-services status
      * text) so the UI never has to guess why a generic error fired.

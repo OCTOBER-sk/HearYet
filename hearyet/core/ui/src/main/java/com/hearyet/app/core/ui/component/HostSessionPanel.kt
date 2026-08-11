@@ -70,6 +70,9 @@ fun HostSessionPanel(
     modifier: Modifier = Modifier,
     qrBitmap: ImageBitmap? = null,
     sessionStartedAtMs: Long = 0L, // §18 — session duration tracking
+    // H-4 — true while the Host's media is paused, so the status line reflects
+    // "Paused" instead of always claiming "Live"/"Playing".
+    isPaused: Boolean = false,
     // §4.5 — sheet slides branch on reduced-motion; snap() instead of animating.
     reduceMotion: Boolean = rememberMotionPreferences().reduceMotion,
 ) {
@@ -126,9 +129,10 @@ fun HostSessionPanel(
                 Spacer(modifier = Modifier.height(Spacing.xs))
                 val elapsedMin = (System.currentTimeMillis() - sessionStartedAtMs) / 60_000L
                 val guestCount = guests.size
+                val statusLabel = if (isPaused) "Paused" else "Live"
                 Text(
-                    text = if (guestCount == 0) "${elapsedMin} min · Live"
-                    else "${elapsedMin} min · $guestCount guest${if (guestCount != 1) "s" else ""} · Live",
+                    text = if (guestCount == 0) "${elapsedMin} min · $statusLabel"
+                    else "${elapsedMin} min · $guestCount guest${if (guestCount != 1) "s" else ""} · $statusLabel",
                     style = MaterialTheme.typography.labelLarge,
                     color = HearYetColors.Accent,
                 )

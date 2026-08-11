@@ -589,6 +589,8 @@ fun MediaPlayerScreen(
                 guests = hostGuests,
                 qrBitmap = qrBitmap,
                 sessionStartedAtMs = sessionStartedAtMs,
+                // H-4 — the in-player panel says "Paused" while the host is paused.
+                isPaused = activeSessionState is SessionState.Paused,
                 onDismiss = { showSessionPanel = false },
                 onEndSession = {
                     showSessionPanel = false

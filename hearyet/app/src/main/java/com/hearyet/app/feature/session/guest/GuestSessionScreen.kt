@@ -34,12 +34,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.hearyet.app.core.model.SessionError
 import com.hearyet.app.core.model.SyncHealth
 import com.hearyet.app.core.ui.color.HearYetColors
 import com.hearyet.app.core.ui.component.ConfirmationDialog
 import com.hearyet.app.core.ui.component.GuestVolumeSlider
 import com.hearyet.app.core.ui.component.Spacing
 import com.hearyet.app.core.ui.component.SyncHealthDot
+import com.hearyet.app.core.ui.component.sessionErrorMessage
 import com.hearyet.app.core.ui.designsystem.NextIcons
 import com.hearyet.app.core.ui.theme.HearYetTheme
 
@@ -48,6 +50,10 @@ fun GuestSessionScreen(
     syncHealth: SyncHealth?,
     onLeaveSession: () -> Unit,
     hostUnreachable: Boolean = false,
+    // M-5 — the actual terminal error (if any) plus its underlying detail, so an
+    // Error state renders the real reason instead of a lying "Listening in sync".
+    error: SessionError? = null,
+    errorDetail: String? = null,
     modifier: Modifier = Modifier,
     hostDisplayName: String? = null,
     sessionCode: String? = null,
@@ -90,7 +96,14 @@ fun GuestSessionScreen(
                 Spacer(modifier = Modifier.height(Spacing.xl))
 
                 Text(
-                    text = if (hostUnreachable) "Connection lost" else "Listening in sync",
+                    // M-5 — "Listening in sync" only when genuinely playing: an
+                    // Error state renders its actual reason (HOST_UNREACHABLE keeps
+                    // the established "Connection lost" headline).
+                    text = when {
+                        hostUnreachable -> "Connection lost"
+                        error != null -> sessionErrorMessage(error)
+                        else -> "Listening in sync"
+                    },
                     style = MaterialTheme.typography.headlineMedium,
                     color = HearYetColors.OnBackground,
                     textAlign = TextAlign.Center,
@@ -112,26 +125,22 @@ fun GuestSessionScreen(
                     horizontalArrangement = Arrangement.spacedBy(Spacing.sm),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    syncHealth?.let {
-                        SyncHealthDot(health = it)
-                        Text(
-                            text = when {
-                                hostUnreachable -> "Host no longer responding"
-                                it == SyncHealth.GOOD -> "In sync"
-                                it == SyncHealth.DEGRADED -> "Sync drifting"
-                                else -> "Connection poor"
-                            },
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = HearYetColors.OnSurfaceMuted,
-                        )
-                    } ?: run {
-                        SyncHealthDot(health = SyncHealth.GOOD)
-                        Text(
-                            text = "In sync",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = HearYetColors.OnSurfaceMuted,
-                        )
-                    }
+                    // M-5 — never claim sync while in an Error state: show the
+                    // actual error text (with its detail when present) and a POOR
+                    // dot instead of "In sync".
+                    SyncHealthDot(
+                        health = if (error != null) SyncHealth.POOR else (syncHealth ?: SyncHealth.GOOD),
+                    )
+                    Text(
+                        text = when {
+                            error != null -> errorDetail?.takeIf { it.isNotBlank() } ?: sessionErrorMessage(error)
+                            syncHealth == SyncHealth.GOOD -> "In sync"
+                            syncHealth == SyncHealth.DEGRADED -> "Sync drifting"
+                            else -> "Connection poor"
+                        },
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = HearYetColors.OnSurfaceMuted,
+                    )
                 }
 
                 if (sessionCode != null) {

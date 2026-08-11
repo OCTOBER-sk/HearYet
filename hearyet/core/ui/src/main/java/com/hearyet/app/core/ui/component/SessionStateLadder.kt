@@ -98,6 +98,7 @@ private val SessionState.ladderIndex: Int
         SessionState.ClockSyncing -> 4
         is SessionState.Connected -> 5
         is SessionState.Playing -> 6
+        is SessionState.Paused -> 6
         is SessionState.Error -> 7
         SessionState.Ended -> 8
     }

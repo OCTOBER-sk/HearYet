@@ -82,6 +82,9 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.guava.future
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
@@ -309,6 +312,11 @@ class PlayerService : MediaSessionService() {
                     mediaSession?.player?.play()
                     return
                 }
+                // H-5 — the host's media ended (or the host is backgrounded with repeat
+                // off): the PCM tap stops here, so end the session cleanly — guests
+                // must leave the silent "Playing"/"Paused" state, and the host session
+                // must transition to Ended instead of advertising a dead session.
+                SessionHolder.active?.onHostMediaEnded()
                 mediaSession?.run {
                     player.clearMediaItems()
                     player.stop()
@@ -553,6 +561,11 @@ class PlayerService : MediaSessionService() {
                 }
 
                 CustomCommands.STOP_PLAYER_SESSION -> {
+                    // H-5 — the player is being stopped (media ended, back button, or the
+                    // notification's close button): the PCM tap is about to be destroyed, so
+                    // a live Host session must end cleanly — otherwise guests sit in a silent
+                    // "Playing" state while the session keeps advertising and heartbeating.
+                    SessionHolder.active?.onHostMediaEnded()
                     mediaSession?.run {
                         serviceScope.launch {
                             mediaRepository.updateMediumPosition(
@@ -679,28 +692,37 @@ class PlayerService : MediaSessionService() {
             dummySurfaceHelper = DummySurfaceHelper(applicationContext, builtPlayer).also { it.start() }
 
             // Observe SessionHolder: activate/deactivate DummySurfaceHelper as session changes.
+            // M-7 — collect the *flow* of the active session instead of capturing
+            // SessionHolder.active once at service start: a session created after the
+            // service (in-player "start session") engages the watchdog + DummySurfaceHelper,
+            // and a replacement session can't leave the collector glued to the stale handle.
             serviceScope.launch {
-                SessionHolder.active?.sessionState?.collect { state ->
-                    when (state) {
-                        is SessionState.Playing -> {
-                            dummySurfaceHelper?.onSessionActive()
-                            // BE §6 — tap-silence watchdog: Playing with no tapped PCM
-                            // shortly after means the renderer-chain wiring is broken
-                            // and guests would hear silence. Warn once, loudly.
-                            if (!warnedTapSilence && lastTapChunkNanos == 0L) {
-                                warnedTapSilence = true
-                                serviceScope.launch {
-                                    delay(5_000)
-                                    if (lastTapChunkNanos == 0L) {
-                                        Log.w(TAG, "PCM tap produced no audio 5s into Playing — guests will hear silence; check HearYetRenderersFactory/SharedAudioRenderer wiring")
+                SessionHolder.activeFlow
+                    .distinctUntilChanged()
+                    .flatMapLatest { session ->
+                        session?.sessionState ?: flowOf(null)
+                    }
+                    .collect { state ->
+                        when (state) {
+                            is SessionState.Playing -> {
+                                dummySurfaceHelper?.onSessionActive()
+                                // BE §6 — tap-silence watchdog: Playing with no tapped PCM
+                                // shortly after means the renderer-chain wiring is broken
+                                // and guests would hear silence. Warn once, loudly.
+                                if (!warnedTapSilence && lastTapChunkNanos == 0L) {
+                                    warnedTapSilence = true
+                                    serviceScope.launch {
+                                        delay(5_000)
+                                        if (lastTapChunkNanos == 0L) {
+                                            Log.w(TAG, "PCM tap produced no audio 5s into Playing — guests will hear silence; check HearYetRenderersFactory/SharedAudioRenderer wiring")
+                                        }
                                     }
                                 }
                             }
+                            SessionState.Ended -> dummySurfaceHelper?.onSessionEnded()
+                            else -> { /* no-op */ }
                         }
-                        SessionState.Ended      -> dummySurfaceHelper?.onSessionEnded()
-                        else                    -> { /* no-op */ }
                     }
-                }
             }
         } catch (e: Exception) {
             e.printStackTrace()

@@ -37,6 +37,15 @@ interface SessionHandle {
     /** BE §7 — Host pause/resume: broadcast PlaybackState to all guests. */
     fun onHostPlayPause(isPlaying: Boolean, positionMs: Long)
 
+    /**
+     * H-5 — Host-only: the host's player has been stopped or its media ended,
+     * so the PCM tap is being destroyed and the session can no longer stream
+     * audio. End the session cleanly (broadcast SessionEnded + teardown) so
+     * guests leave the silent 'Playing'/'Paused' state. Media END is distinct
+     * from a pause — a pause keeps the session alive (H-4).
+     */
+    fun onHostMediaEnded()
+
     /** BE §7 — Host media change: broadcast MediaChanged then PlaybackState. */
     fun onHostMediaChanged(mediaTitle: String)
 

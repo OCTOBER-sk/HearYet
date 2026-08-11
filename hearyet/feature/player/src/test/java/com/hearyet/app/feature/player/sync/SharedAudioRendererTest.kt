@@ -5,6 +5,7 @@ import androidx.media3.common.audio.AudioProcessor
 import java.nio.ByteBuffer
 import org.junit.Assert.assertArrayEquals
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class SharedAudioRendererTest {
@@ -148,6 +149,28 @@ class SharedAudioRendererTest {
         // A small remainder then starts a fresh accumulation from zero.
         renderer.queueInput(ByteBuffer.wrap(ByteArray(500)))
         assertEquals(3, chunks.size)
+    }
+
+    @Test
+    fun queueInput_multiframeBuffer_stampsOneFrameDurationPerFrame() {
+        // M-1 — every frame emitted from a single input buffer must carry its own
+        // capture time: timestamp = tapTime + n·frameDuration (n = frame index in
+        // the buffer). A burst of near-identical timestamps would target all frames
+        // at the same instant on the guest scheduler (drop/stutter).
+        val renderer = start(newRenderer())
+        val chunks = mutableListOf<AudioChunk>()
+        renderer.onAudioChunk = { chunks.add(it) }
+
+        // 3 full frames @ 20ms = 11520 bytes.
+        renderer.queueInput(ByteBuffer.wrap(ByteArray(3_840 * 3)))
+
+        assertEquals(3, chunks.size)
+        val frameDurationNanos = SharedAudioRenderer.FRAME_DURATION_MS * 1_000_000L
+        // Exact spacing between consecutive frames, in emission order.
+        assertEquals(frameDurationNanos, chunks[1].hostTimestampNanos - chunks[0].hostTimestampNanos)
+        assertEquals(frameDurationNanos, chunks[2].hostTimestampNanos - chunks[1].hostTimestampNanos)
+        // The first frame is stamped at the buffer's tap time — never in the future.
+        assertTrue(chunks[0].hostTimestampNanos <= System.nanoTime())
     }
 
     @Test

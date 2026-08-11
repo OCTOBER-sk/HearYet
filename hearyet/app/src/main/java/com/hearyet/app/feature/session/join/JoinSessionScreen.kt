@@ -54,6 +54,7 @@ import com.hearyet.app.core.ui.component.Spacing
 import com.hearyet.app.core.ui.component.sessionErrorMessage
 import com.hearyet.app.core.ui.theme.HearYetTheme
 import com.hearyet.app.qr.QrScannerAnalyzer
+import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 /**
@@ -133,6 +134,29 @@ fun JoinSessionScreen(
 // Scanner view (camera + frame overlay)
 // ═══════════════════════════════════════════════════════════════════════
 
+/**
+ * M-6 — ownership of the [ScannerView] CameraX bind + analyzer executor.
+ * All accesses happen on the main thread (the ProcessCameraProvider listener
+ * runs on the main executor, and [DisposableEffect] runs on dispose). A
+ * [released] guard stops a late-resolving provider from binding the camera
+ * after the scanner already left composition.
+ */
+private class ScannerResources {
+    var cameraProvider: ProcessCameraProvider? = null
+    var analyzerExecutor: ExecutorService? = null
+    var released: Boolean = false
+
+    /** Unbind the camera and shut down the analyzer executor exactly once. */
+    fun release() {
+        if (released) return
+        released = true
+        cameraProvider?.unbindAll()
+        cameraProvider = null
+        analyzerExecutor?.shutdown()
+        analyzerExecutor = null
+    }
+}
+
 @Composable
 private fun ScannerView(
     onQrDecoded: (String) -> Unit,
@@ -142,6 +166,16 @@ private fun ScannerView(
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
 
+    // M-6 — own the CameraX bind + analyzer executor so leaving this composable
+    // tears them down. Previously each scanner open leaked a single-thread
+    // executor and kept the camera hot, and a stale analyzer kept firing
+    // onQrDecoded while the user had switched to code entry / an error state.
+    val scannerResources = remember { ScannerResources() }
+
+    DisposableEffect(lifecycleOwner) {
+        onDispose { scannerResources.release() }
+    }
+
     Box(modifier = modifier.fillMaxSize()) {
         // Camera preview — full-bleed behind system bars (FE §5 fullBleed exception)
         AndroidView(
@@ -149,16 +183,22 @@ private fun ScannerView(
                 PreviewView(ctx).also { previewView ->
                     val cameraProviderFuture = ProcessCameraProvider.getInstance(ctx)
                     cameraProviderFuture.addListener({
+                        // The scanner may already have left composition (e.g. the user
+                        // switched to code entry) before the provider resolved.
+                        if (scannerResources.released) return@addListener
                         val cameraProvider = cameraProviderFuture.get()
+                        scannerResources.cameraProvider = cameraProvider
                         val preview = CameraPreview.Builder().build().also {
                             it.setSurfaceProvider(previewView.surfaceProvider)
                         }
+                        val analyzerExecutor = Executors.newSingleThreadExecutor()
+                        scannerResources.analyzerExecutor = analyzerExecutor
                         val imageAnalysis = ImageAnalysis.Builder()
                             .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
                             .build()
                             .also {
                                 it.setAnalyzer(
-                                    Executors.newSingleThreadExecutor(),
+                                    analyzerExecutor,
                                     QrScannerAnalyzer { raw ->
                                         Log.d("JoinSessionScreen", "QR decoded")
                                         onQrDecoded(raw)

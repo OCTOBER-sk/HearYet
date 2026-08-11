@@ -497,16 +497,22 @@ fun EntryProviderScope<NavKey>.hearYetNavGraph(
             }
         }
 
-        // Cleanup on back-navigation out of the Join flow. Only tear down while the
-        // guest is still mid-join — once it reached Connected/Playing, the session is
-        // owned by the in-session screen and must survive this entry's disposal when
-        // we replaceRoot to InSessionGuestRoute (BE §4).
+        // Cleanup on back-navigation out of the Join flow. Tear down for EVERY
+        // state that has not yet handed the session off to the in-session screen:
+        // Idle and Error also allocate guest resources during this route (greeting
+        // manager + SoundPool, transport discovery, callbacks — H-7), so they must
+        // be released here too. Once the session reaches Connected/Playing it is
+        // owned by the in-session guest screen and must survive this entry's
+        // disposal when we replaceRoot to InSessionGuestRoute (BE §4).
         DisposableEffect(Unit) {
             onDispose {
-                if (sessionState is SessionState.Discovering ||
-                    sessionState is SessionState.ClockSyncing
-                ) {
-                    coordinator.leaveSession()
+                when (sessionState) {
+                    is SessionState.Idle,
+                    is SessionState.Discovering,
+                    is SessionState.ClockSyncing,
+                    is SessionState.Error,
+                    -> coordinator.leaveSession()
+                    else -> {}
                 }
             }
         }
@@ -607,10 +613,14 @@ fun EntryProviderScope<NavKey>.hearYetNavGraph(
             else -> null
         }
 
+        // M-5 — pass the actual error (reason + detail) so the in-session screen
+        // renders the real failure instead of "Listening in sync" for any Error.
+        val sessionError = (sessionState as? SessionState.Error)?.reason
+        val sessionErrorDetail = (sessionState as? SessionState.Error)?.detail
+
         // BE §10.1/§17.9 — a silently dead host must never leave the guest staring at a
         // stale "in sync" screen; HOST_UNREACHABLE renders an explicit recovery state.
-        val hostUnreachable =
-            (sessionState as? SessionState.Error)?.reason == SessionError.HOST_UNREACHABLE
+        val hostUnreachable = sessionError == SessionError.HOST_UNREACHABLE
 
         // BE §6:356 — guest-local volume: bind the slider to SessionCoordinator's
         // guestVolumeState (session AudioTrack gain only; never STREAM_MUSIC).
@@ -621,6 +631,8 @@ fun EntryProviderScope<NavKey>.hearYetNavGraph(
         GuestSessionScreen(
             syncHealth = syncHealth,
             hostUnreachable = hostUnreachable,
+            error = sessionError,
+            errorDetail = sessionErrorDetail,
             hostDisplayName = sessionHandle?.hostDisplayName,
             sessionCode = sessionHandle?.sessionCode,
             guestCount = sessionHandle?.hostGuestCount?.collectAsState()?.value ?: 0,
@@ -659,6 +671,8 @@ fun EntryProviderScope<NavKey>.hearYetNavGraph(
             guests = guests,
             sessionStartedAtMs = sessionStartedAtMs,
             qrPayload = sessionHandle?.qrPayload,
+            // H-4 — reflect a paused host session instead of always "Live".
+            isPaused = sessionState is SessionState.Paused,
             onOpenPlayer = { /* PlayerActivity opens independently */ },
             onEndSession = {
                 sessionHandle?.endSession()

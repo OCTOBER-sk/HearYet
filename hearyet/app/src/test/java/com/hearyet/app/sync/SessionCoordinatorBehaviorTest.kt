@@ -23,11 +23,11 @@ import io.mockk.slot
 import io.mockk.unmockkAll
 import io.mockk.verify
 import java.util.concurrent.TimeUnit
+import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
-import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Assert.fail
 import org.junit.Before
@@ -294,8 +294,9 @@ class SessionCoordinatorBehaviorTest {
             SessionState.Error(SessionError.CONNECTION_FAILED),
             coordinator.sessionState.value,
         )
-        // BE §4 — the misrouted connection is torn down.
-        verify { transport.disconnect(HOST_ENDPOINT) }
+        // H-7 — the misrouted connection is torn down via the single teardown path
+        // (disconnectAll + callback unbind + greeting release), so the retry starts clean.
+        verify { transport.disconnectAll() }
         coordinator.teardown()
     }
 
@@ -345,11 +346,57 @@ class SessionCoordinatorBehaviorTest {
     }
 
     @Test
-    fun guest_noHostMessagesFor15s_transitionsToHostUnreachable() {
+    fun guest_handshakeSilentHost_connectionFailedAfterHandshakeTimeout() {
         val coordinator = newCoordinator()
         connectGuest(coordinator)
 
-        // No handshake ack, no heartbeat. Robolectric virtualizes the looper clock
+        // M-3 — a host that accepts the connection but never sends
+        // SessionHandshakeAck (nor anything else) must not strand the guest in
+        // ClockSyncing: the 12s handshake timeout fires clean CONNECTION_FAILED
+        // via the H-7 teardown path before the 15s host-unreachable watchdog.
+        repeat(13) {
+            shadowOf(Looper.getMainLooper()).idleFor(1, TimeUnit.SECONDS)
+            Thread.sleep(1_100)
+        }
+
+        assertEquals(
+            SessionState.Error(SessionError.CONNECTION_FAILED),
+            coordinator.sessionState.value,
+        )
+        // H-7 — the timed-out connection is torn down via the single teardown
+        // path (disconnectAll + callback unbind), so the retry starts clean.
+        verify { transport.disconnectAll() }
+        coordinator.teardown()
+    }
+
+    @Test
+    fun guest_hostSilentAfterSync_transitionsToHostUnreachable() {
+        val coordinator = newCoordinator()
+        lateinit var coordinatorRef: SessionCoordinator
+        // The wire answers every ClockSyncRequest so the batch converges.
+        every { transport.sendControlMessage(any(), any<ControlMessage>()) } answers {
+            val message = secondArg<ControlMessage>()
+            if (message is ControlMessage.ClockSyncRequest) {
+                coordinatorRef.clockSyncManager?.pendingSyncResponseQueue?.offer(
+                    ControlMessage.ClockSyncResponse(
+                        t0 = message.t0,
+                        t1 = message.t0 + 100_000_001L,
+                        t2 = message.t0 + 100_000_002L,
+                    ),
+                )
+            }
+        }
+        coordinatorRef = coordinator
+        connectGuest(coordinator)
+        // Complete the §4 handshake (this also disarms the M-3 handshake timer)
+        // so the guest reaches the synced state.
+        deliverControlMessage(HOST_ENDPOINT, ControlMessage.SessionHandshakeAck(sessionId = "sid-1"))
+        awaitCondition("sync pipeline ready") {
+            coordinator.presentationScheduler?.isRunning == true
+        }
+        assertEquals(SessionState.Connected(0), coordinator.sessionState.value)
+
+        // Now the host goes silent. Robolectric virtualizes the looper clock
         // (which drives the heartbeat coroutine's delay) but NOT System.nanoTime
         // (which the coordinator uses to measure the gap), so each iteration must
         // advance BOTH clocks: idle the looper 1s and let 1.1s of real time pass.
@@ -417,10 +464,11 @@ class SessionCoordinatorBehaviorTest {
         assertEquals(0.4f, greetVolume.captured, 0f)
 
         // BE §14.4.2/§17.13 — the greeted identity is persisted (survives process death).
-        assertEquals(
-            "ep-host",
-            SessionDataStore(context).getString(SessionDataStore.KEY_GREETED_IDENTITY),
-        )
+        // H-2 — the write is now launched on the coordinator's IO scope, so wait for it
+        // to land before asserting the persisted value.
+        awaitCondition("greeted identity persisted") {
+            runBlocking { SessionDataStore(context).getString(SessionDataStore.KEY_GREETED_IDENTITY) } == "ep-host"
+        }
 
         // ── BE §6:352 — transient focus handlers duck without disturbing sync ──
         val focusManager = coordinator.guestAudioFocusManager
@@ -478,7 +526,9 @@ class SessionCoordinatorBehaviorTest {
         // ── BE §14.3/§14.4.2 — restore rejoin reuses the persisted greet identity:
         //    seedGreetedIdentity must receive the same identity that was persisted
         //    when the chime first played, so the rejoin is never re-greeted. ──
-        assertTrue(coordinator.performRestoredGuestRejoin())
+        // H-2 — performRestoredGuestRejoin is now suspend (DataStore reads); the seed
+        // itself still happens synchronously inside startGuestDiscovery.
+        runBlocking { assertTrue(coordinator.performRestoredGuestRejoin()) }
         verify(exactly = 1) { greetingMock.seedGreetedIdentity("ep-host") }
 
         // ── Session end resets the greeting state (BE §14.3) ──
@@ -486,6 +536,107 @@ class SessionCoordinatorBehaviorTest {
         verify(exactly = 1) { greetingMock.onSessionEnded() }
         // The persisted greeted identity is cleared with the rest of the session
         // state, so a NEW session greets again (§14.4.1/§14.4.3).
-        assertNull(SessionDataStore(context).getString(SessionDataStore.KEY_GREETED_IDENTITY))
+        // H-2 — the clear is now launched on the coordinator's IO scope, so wait
+        // for it to land before asserting the key is gone.
+        awaitCondition("greeted identity cleared") {
+            runBlocking { SessionDataStore(context).getString(SessionDataStore.KEY_GREETED_IDENTITY) } == null
+        }
+    }
+
+    @Test
+    fun guest_playbackStateIsPlayingFalse_pausesAudioTrackAndMirrorsState() {
+        // H-4 — the guest must honor PlaybackState.isPlaying end-to-end: a false
+        // pause broadcast pauses the guest's AudioTrack and moves the state machine
+        // to Paused (scheduler stays alive — pause ≠ teardown); a true resume
+        // brings the track back and returns to Playing.
+        val coordinator = SessionCoordinator(context, transportOverride = transport)
+        lateinit var coordinatorRef: SessionCoordinator
+        every { transport.sendControlMessage(any(), any<ControlMessage>()) } answers {
+            val message = secondArg<ControlMessage>()
+            if (message is ControlMessage.ClockSyncRequest) {
+                coordinatorRef.clockSyncManager?.pendingSyncResponseQueue?.offer(
+                    ControlMessage.ClockSyncResponse(
+                        t0 = message.t0,
+                        t1 = message.t0 + 100_000_001L,
+                        t2 = message.t0 + 100_000_002L,
+                    ),
+                )
+            }
+        }
+        coordinatorRef = coordinator
+
+        connectGuest(coordinator)
+        deliverControlMessage(HOST_ENDPOINT, ControlMessage.SessionHandshakeAck(sessionId = "sid-1"))
+        awaitCondition("sync pipeline ready") {
+            coordinator.presentationScheduler?.isRunning == true
+        }
+
+        // First PlaybackState(true) → Playing, track running.
+        deliverControlMessage(
+            HOST_ENDPOINT,
+            ControlMessage.PlaybackState(isPlaying = true, positionMs = 5_000, sharedClockTimestampNanos = 1L),
+        )
+        assertEquals(SessionState.Playing(5_000), coordinator.sessionState.value)
+
+        // H-4 — PlaybackState(false) → AudioTrack paused + Paused state, scheduler alive.
+        val track = coordinator.presentationScheduler?.getAudioTrack()
+        assertNotNull(track)
+        assertEquals(android.media.AudioTrack.PLAYSTATE_PLAYING, track?.playState)
+        deliverControlMessage(
+            HOST_ENDPOINT,
+            ControlMessage.PlaybackState(isPlaying = false, positionMs = 5_000, sharedClockTimestampNanos = 2L),
+        )
+        assertEquals(SessionState.Paused(5_000), coordinator.sessionState.value)
+        assertEquals(android.media.AudioTrack.PLAYSTATE_PAUSED, track?.playState)
+        assertTrue(coordinator.presentationScheduler?.isRunning == true)
+
+        // H-4 — PlaybackState(true) → resumed, back to Playing.
+        deliverControlMessage(
+            HOST_ENDPOINT,
+            ControlMessage.PlaybackState(isPlaying = true, positionMs = 6_000, sharedClockTimestampNanos = 3L),
+        )
+        assertEquals(SessionState.Playing(6_000), coordinator.sessionState.value)
+        assertEquals(android.media.AudioTrack.PLAYSTATE_PLAYING, track?.playState)
+        assertTrue(coordinator.presentationScheduler?.isRunning == true)
+        coordinator.teardown()
+    }
+
+    @Test
+    fun guest_pausedWhileClockSyncing_settlesIntoPausedWhenPipelineReady() {
+        // H-4 — a host that is already paused when the guest connects must not
+        // leave the guest claiming Connected/Playing once the pipeline comes up:
+        // the paused PlaybackState received during ClockSyncing is honored.
+        val coordinator = SessionCoordinator(context, transportOverride = transport)
+        lateinit var coordinatorRef: SessionCoordinator
+        every { transport.sendControlMessage(any(), any<ControlMessage>()) } answers {
+            val message = secondArg<ControlMessage>()
+            if (message is ControlMessage.ClockSyncRequest) {
+                coordinatorRef.clockSyncManager?.pendingSyncResponseQueue?.offer(
+                    ControlMessage.ClockSyncResponse(
+                        t0 = message.t0,
+                        t1 = message.t0 + 100_000_001L,
+                        t2 = message.t0 + 100_000_002L,
+                    ),
+                )
+            }
+        }
+        coordinatorRef = coordinator
+
+        connectGuest(coordinator)
+        // Host is paused before the guest ever reached Playing.
+        deliverControlMessage(
+            HOST_ENDPOINT,
+            ControlMessage.PlaybackState(isPlaying = false, positionMs = 12_000, sharedClockTimestampNanos = 1L),
+        )
+        assertEquals(SessionState.Paused(12_000), coordinator.sessionState.value)
+
+        deliverControlMessage(HOST_ENDPOINT, ControlMessage.SessionHandshakeAck(sessionId = "sid-1"))
+        awaitCondition("sync pipeline ready") {
+            coordinator.presentationScheduler?.isRunning == true
+        }
+
+        // H-4 — the pipeline settles into Paused (host never resumed), not Connected.
+        assertEquals(SessionState.Paused(12_000), coordinator.sessionState.value)
+        coordinator.teardown()
     }
 }

@@ -38,6 +38,15 @@ class PresentationScheduler(
 
         /** Frame duration per AudioChunk in ms. */
         private const val FRAME_MS: Long = 20
+
+        /**
+         * Ring-buffer cap — 250 chunks ≈ 5 s of audio at 20 ms per chunk (BE §7
+         * "ring buffer"). When a stalled [AudioTrack] (WRITE_NON_BLOCKING → 0)
+         * cannot drain the buffer, the oldest chunk is dropped for each new one
+         * so a pause/focus-loss stall can never grow memory without bound
+         * (~192 KB/s of incoming PCM must not accumulate forever).
+         */
+        const val MAX_BUFFERED_CHUNKS: Int = 250
     }
 
     // ── Configuration ───────────────────────────────────────────────
@@ -49,6 +58,16 @@ class PresentationScheduler(
     /** Current clock offset from [ClockSyncManager] (hostNanos → guestNanos). */
     @Volatile
     var clockOffsetNanos: Double = 0.0
+
+    /**
+     * H-3 — apply a refreshed clock offset from a background re-sync batch
+     * (BE §5 crystal-drift correction). [clockOffsetNanos] is [Volatile], so a
+     * write from the background re-sync thread is immediately visible to the
+     * playback thread's [guestPlaybackTimeNanos] target computation.
+     */
+    fun updateClockOffset(newOffsetNanos: Long) {
+        clockOffsetNanos = newOffsetNanos.toDouble()
+    }
 
     // ── Internal ────────────────────────────────────────────────────
 
@@ -232,9 +251,19 @@ class PresentationScheduler(
     /**
      * Called when an [AudioChunk] arrives from the transport layer.
      * Computes the target playback time and inserts it into the ring buffer.
+     *
+     * Ring-buffer semantics (BE §7): when the buffer is at its cap, the oldest
+     * buffered chunk is dropped before the new one is inserted. A stalled track
+     * therefore sheds old audio instead of growing memory forever.
      */
     fun onChunkReceived(chunk: AudioChunk) {
         val targetNanos = guestPlaybackTimeNanos(chunk.hostTimestampNanos)
+        if (buffer.size >= MAX_BUFFERED_CHUNKS) {
+            buffer.pollFirstEntry()?.let {
+                chunksDropped++
+                Log.v(TAG, "Ring buffer full — dropped oldest chunk (cap=${MAX_BUFFERED_CHUNKS}, stalled track?)")
+            }
+        }
         buffer[targetNanos] = chunk
         chunksReceived++
         bufferSize = buffer.size
@@ -279,15 +308,17 @@ class PresentationScheduler(
         try {
             audioTrack?.pause()
             audioTrack?.flush()
-        } finally {
             // Clear BEFORE play() so the playback thread can resume writing as soon as
-            // the track is running again.
+            // the track is running again. isFlushing stays held until after the clear:
+            // the thread parked at the isFlushing check (see start()) therefore cannot
+            // wake between play() and clear() and write a stale chunk (M-2).
+            buffer.clear()
+            bufferSize = 0
+            chunksPlayed = 0
+        } finally {
             isFlushing = false
         }
         audioTrack?.play() // Resume immediately; the scheduler refills from incoming chunks.
-        buffer.clear()
-        bufferSize = 0
-        chunksPlayed = 0
         Log.d(TAG, "Scheduler flushed (paused → flushed → resumed; counters reset)")
     }
 }
