@@ -14,7 +14,7 @@
     <img src="https://img.shields.io/badge/Android-API%2023%2B-3DDC84?logo=android&logoColor=white" alt="Android">
   </a>
   <a href="hearyet/LICENSE">
-    <img src="https://img.shields.io/badge/license-MIT- blue" alt="MIT License">
+    <img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT License">
   </a>
 </p></div>---
 
@@ -132,19 +132,20 @@ hearyet/
 
 Stack
 
-Component| Technology
-Language| Kotlin 2.4.10
-UI| Jetpack Compose
-Design| Material 3
-DI| Hilt
-Database| Room
-Storage| DataStore
-Media| Media3 1.10.1
-Networking| Nearby Connections 19.3.0
-Testing| JVM + Robolectric
-Lint| ktlint
-CI| GitHub Actions
-Minimum Android| API 23
+| Component | Technology |
+|---|---|
+| Language | Kotlin 2.4.10 |
+| UI | Jetpack Compose |
+| Design | Material 3 |
+| DI | Hilt |
+| Database | Room |
+| Storage | DataStore |
+| Media | Media3 1.10.1 |
+| Networking | Nearby Connections 19.3.0 |
+| Testing | JVM + Robolectric |
+| Lint | ktlint |
+| CI | GitHub Actions |
+| Minimum Android | API 23 |
 
 ---
 
