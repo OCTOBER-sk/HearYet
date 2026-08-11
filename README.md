@@ -1,7 +1,7 @@
 <div align="center">
 
 <h1>
-  <img src="assets/hearyet-logo.png" alt="HearYet logo" width="44" style="vertical-align:middle"/>
+  <img src="assets/hearyet-logo.png" alt="HearYet logo" width="44" style="vertical-align:-6px"/>
   <span style="color:#E57357">HearYet</span>
 </h1>
 
