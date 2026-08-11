@@ -1,7 +1,9 @@
 <div align="center">
 
-<img src="assets/hearyet-logo.png" alt="HearYet logo" width="42" style="vertical-align:middle"/>
-<span style="font-size:2.6em; font-weight:700; vertical-align:middle; margin-left:8px; color:#E57357">HearYet</span>
+<h1>
+  <img src="assets/hearyet-logo.png" alt="HearYet logo" width="44" style="vertical-align:middle"/>
+  <span style="color:#E57357">HearYet</span>
+</h1>
 
 **Watch together. Hear in sync. No internet needed.**
 
