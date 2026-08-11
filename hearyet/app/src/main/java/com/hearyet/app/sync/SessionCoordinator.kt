@@ -351,12 +351,14 @@ class SessionCoordinator(
             // H-4 — a paused host seeds the latecomer with isPlaying=false so the
             // guest does not start playing into a paused session.
             if (currentState is SessionState.Playing || currentState is SessionState.Paused) {
+                val positionMs = (currentState as? SessionState.Playing)?.positionMs
+                    ?: (currentState as SessionState.Paused).positionMs
                 Log.d(TAG, "Host: latecomer join — sending PlaybackState to $endpointId")
                 transport.sendControlMessage(
                     endpointId,
                     ControlMessage.PlaybackState(
                         isPlaying = currentState is SessionState.Playing,
-                        positionMs = currentState.positionMs,
+                        positionMs = positionMs,
                         sharedClockTimestampNanos = System.nanoTime(),
                     ),
                 )
@@ -551,14 +553,16 @@ class SessionCoordinator(
                 }
                 val currentState = _sessionState.value
                 if (currentState is SessionState.Playing || currentState is SessionState.Paused) {
+                    val positionMs = (currentState as? SessionState.Playing)?.positionMs
+                        ?: (currentState as SessionState.Paused).positionMs
                     // H-4 — re-seed with the actual playing state: a paused host must
                     // not start the rejoined guest's audio.
-                    Log.d(TAG, "Host: re-seeding rejoined guest $endpointId at ${currentState.positionMs}ms")
+                    Log.d(TAG, "Host: re-seeding rejoined guest $endpointId at ${positionMs}ms")
                     transport.sendControlMessage(
                         endpointId,
                         ControlMessage.PlaybackState(
                             isPlaying = currentState is SessionState.Playing,
-                            positionMs = currentState.positionMs,
+                            positionMs = positionMs,
                             sharedClockTimestampNanos = System.nanoTime(),
                         ),
                     )
@@ -1035,8 +1039,8 @@ class SessionCoordinator(
                 } else {
                     when (current) {
                         // Initial entry: transitioning from Connected or ClockSyncing
-                        is SessionState.Connected ||
-                            is SessionState.ClockSyncing -> {
+                        is SessionState.Connected,
+                        is SessionState.ClockSyncing -> {
                             _sessionState.value = SessionState.Playing(message.positionMs)
 
                             // Guest greeting chime — §2.2: fire on FIRST Playing transition only
