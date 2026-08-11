@@ -1,0 +1,1490 @@
+--------- beginning of main
+08-08 16:31:41.468 19810 19810 D NearbyTransportMgr: startAdvertising: HearYet-014330
+08-08 16:31:41.510 19810 19810 D SessionCoordinator: Host session started: HearYet-014330
+08-08 16:31:41.928 19810 19810 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:31:45.406 19810 19810 D NearbyTransportMgr: Advertising started: HearYet-014330
+08-08 16:31:46.933 19810 19810 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:31:51.949 19810 19810 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:31:56.964 19810 19810 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:32:01.979 19810 19810 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:32:06.996 19810 19810 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:32:12.011 19810 19810 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:32:17.023 19810 19810 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:32:22.036 19810 19810 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:32:24.133 19810 19810 D NearbyTransportMgr: onConnectionInitiated: I8WM name=Infinix X669C
+08-08 16:32:24.151 19810 19810 D NearbyTransportMgr: onConnectionResult: I8WM SUCCESS (isHostMode=true)
+08-08 16:32:24.151 19810 19810 D SessionCoordinator: Host: guest connected — I8WM (Infinix X669C)
+08-08 16:32:24.155 19810 19810 D SessionCoordinator: Host: started audio sender for I8WM
+08-08 16:32:24.481 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: GuestJoined
+08-08 16:32:24.481 19810 19810 D SessionCoordinator: Host: GuestJoined from Infinix X669C
+08-08 16:32:24.484 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:24.485 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:24.652 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:24.653 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:24.793 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:24.795 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:24.971 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:24.972 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:25.190 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:25.192 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:25.390 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:25.392 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:25.591 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:25.593 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:25.808 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:25.810 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:26.002 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:26.003 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:26.200 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:26.200 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:26.207 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:26.207 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:26.377 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:26.379 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:26.608 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:26.610 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:26.789 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:26.791 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:27.009 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:27.011 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:27.043 19810 19810 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 1 endpoints
+08-08 16:32:27.198 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:27.200 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:27.387 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:27.389 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:27.622 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:27.625 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:27.803 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:27.805 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:27.982 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:27.984 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:27.994 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:27.996 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:28.187 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:28.188 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:28.403 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:28.405 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:28.603 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:28.605 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:28.802 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:28.805 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:29.008 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:29.010 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:29.193 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:29.194 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:29.467 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:29.469 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:29.594 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:29.597 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:29.792 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:29.794 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:29.801 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:29.802 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:30.043 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:30.045 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:30.208 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:30.210 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:30.405 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:30.407 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:30.627 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:30.630 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:30.803 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:30.805 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:31.022 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:31.024 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:31.204 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:31.207 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:31.418 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:31.420 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:31.604 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:31.607 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:31.614 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:31.616 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:31.824 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:31.825 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:32.017 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:32.019 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:32.048 19810 19810 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 1 endpoints
+08-08 16:32:32.221 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:32.222 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:32.407 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:32.409 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:32.619 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:32.621 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:32.815 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:32.818 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:33.005 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:33.007 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:33.227 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:33.228 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:33.423 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:33.424 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:33.431 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:33.433 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:33.602 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:33.603 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:33.819 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:33.821 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:34.017 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:34.020 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:34.250 19810 19810 D NearbyTransportMgr: ControlMessage from I8WM: ClockSyncRequest
+08-08 16:32:34.252 19810 19810 D NearbyTransportMgr: sendControlMessage to I8WM: ClockSyncResponse
+08-08 16:32:35.133 19810 19810 D NearbyTransportMgr: onDisconnected: I8WM
+08-08 16:32:35.136 19810 19810 D SessionCoordinator: Host: stopped audio sender for I8WM
+08-08 16:32:35.138 19810 21281 D SessionCoordinator: Host: audio sender thread exited for I8WM
+08-08 16:32:37.057 19810 19810 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:32:42.070 19810 19810 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:32:47.086 19810 19810 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:32:52.101 19810 19810 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:32:57.122 19810 19810 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:33:02.136 19810 19810 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:33:07.146 19810 19810 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:33:12.158 19810 19810 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:33:17.172 19810 19810 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:33:22.188 19810 19810 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:33:27.202 19810 19810 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:33:27.477 19810 19810 D NearbyTransportMgr: onConnectionInitiated: G1FS name=Infinix X669C
+08-08 16:33:27.492 19810 19810 D NearbyTransportMgr: onConnectionResult: G1FS SUCCESS (isHostMode=true)
+08-08 16:33:27.492 19810 19810 D SessionCoordinator: Host: guest connected — G1FS (Infinix X669C)
+08-08 16:33:27.494 19810 19810 D SessionCoordinator: Host: started audio sender for G1FS
+08-08 16:33:27.547 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: RejoinRequest
+08-08 16:33:27.547 19810 19810 D SessionCoordinator: Host: RejoinRequest from G1FS (prev=L991)
+08-08 16:33:27.626 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: GuestJoined
+08-08 16:33:27.626 19810 19810 D SessionCoordinator: Host: GuestJoined from Infinix X669C
+08-08 16:33:27.633 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:27.634 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:27.817 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:27.819 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:28.036 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:28.037 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:28.266 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:28.267 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:28.428 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:28.430 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:28.637 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:28.639 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:28.810 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:28.812 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:29.019 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:29.021 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:29.263 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:29.266 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:29.420 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:29.422 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:29.428 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:29.429 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:29.632 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:29.634 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:29.843 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:29.845 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:30.043 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:30.045 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:30.241 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:30.242 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:30.425 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:30.427 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:30.641 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:30.643 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:30.823 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:30.825 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:31.043 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:31.046 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:31.270 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:31.273 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:31.279 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:31.281 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:31.479 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:31.482 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:31.644 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:31.645 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:31.860 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:31.861 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:32.060 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:32.062 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:32.212 19810 19810 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 1 endpoints
+08-08 16:33:32.250 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:32.251 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:32.473 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:32.475 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:32.647 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:32.648 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:32.889 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:32.891 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:33.055 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:33.057 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:33.066 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:33.067 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:33.253 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:33.254 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:33.510 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:33.512 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:33.658 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:33.660 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:33.903 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:33.905 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:34.074 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:34.076 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:34.280 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:34.282 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:34.464 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:34.466 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:34.664 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:34.666 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:34.880 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:34.882 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:34.893 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:34.895 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:35.066 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:35.069 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:35.281 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:35.282 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:35.575 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:35.576 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:35.670 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:35.670 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:35.867 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:35.868 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:36.076 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:36.078 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:36.610 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:36.611 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:36.611 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:36.611 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:36.694 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:36.695 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:36.728 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:36.729 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:36.948 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:36.951 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:37.126 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:37.128 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:37.349 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:37.351 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:37.531 19810 19810 D NearbyTransportMgr: ControlMessage from G1FS: ClockSyncRequest
+08-08 16:33:37.533 19810 19810 D NearbyTransportMgr: sendControlMessage to G1FS: ClockSyncResponse
+08-08 16:33:37.606 19810 19810 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 1 endpoints
+08-08 16:33:38.489 19810 19810 D NearbyTransportMgr: onDisconnected: G1FS
+08-08 16:33:38.489 19810 19810 D SessionCoordinator: Host: stopped audio sender for G1FS
+08-08 16:33:38.489 19810 21806 D SessionCoordinator: Host: audio sender thread exited for G1FS
+08-08 16:33:42.789 19810 19810 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:33:47.802 19810 19810 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:33:52.819 19810 19810 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:33:57.836 19810 19810 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:34:02.851 19810 19810 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:34:07.865 19810 19810 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:34:12.873 19810 19810 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:34:17.887 19810 19810 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:34:22.899 19810 19810 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:34:27.914 19810 19810 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:34:32.932 19810 19810 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:34:37.948 19810 19810 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:34:42.963 19810 19810 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:35:07.172 22947 22947 D SessionCoordinator: Restored session: role=Host, id=97bddbb4-141e-42fc-9d96-468d1a91a519, code=014330
+08-08 16:35:22.416 22947 22947 D NearbyTransportMgr: startAdvertising: HearYet-FN4P09
+08-08 16:35:22.448 22947 22947 D SessionCoordinator: Host session started: HearYet-FN4P09
+08-08 16:35:22.902 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:35:26.435 22947 22947 D NearbyTransportMgr: Advertising started: HearYet-FN4P09
+08-08 16:35:27.912 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:35:32.921 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:35:37.928 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:35:42.936 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:35:47.943 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:35:49.211 22947 22947 D NearbyTransportMgr: onConnectionInitiated: QSCJ name=Infinix X669C
+08-08 16:35:49.245 22947 22947 D NearbyTransportMgr: onConnectionResult: QSCJ SUCCESS (isHostMode=true)
+08-08 16:35:49.245 22947 22947 D SessionCoordinator: Host: guest connected — QSCJ (Infinix X669C)
+08-08 16:35:49.248 22947 22947 D SessionCoordinator: Host: started audio sender for QSCJ
+08-08 16:35:49.422 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: GuestJoined
+08-08 16:35:49.422 22947 22947 D SessionCoordinator: Host: GuestJoined from Infinix X669C
+08-08 16:35:49.430 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: SessionHandshake
+08-08 16:35:49.430 22947 22947 D SessionCoordinator: Host: SessionHandshake from QSCJ
+08-08 16:35:49.432 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: SessionHandshakeAck
+08-08 16:35:49.564 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:49.564 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:49.766 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:49.768 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:49.998 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:50.000 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:50.169 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:50.170 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:50.374 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:50.375 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:50.575 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:50.575 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:50.779 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:50.780 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:50.975 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:50.976 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:51.212 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:51.212 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:51.377 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:51.379 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:51.590 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:51.591 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:51.768 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:51.770 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:51.964 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:51.966 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:52.180 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:52.181 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:52.400 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:52.401 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:52.585 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:52.586 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:52.790 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:52.792 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:52.949 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 1 endpoints
+08-08 16:35:52.965 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:52.967 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:53.191 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:53.192 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:53.363 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:53.365 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:53.398 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:53.399 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:53.599 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:53.602 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:53.816 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:53.818 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:54.018 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:54.020 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:54.219 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:54.220 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:54.403 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:54.405 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:54.611 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:54.612 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:54.797 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:54.798 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:54.990 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:54.991 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:55.214 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:55.214 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:55.223 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:55.225 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:55.447 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:55.448 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:55.613 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:55.614 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:55.803 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:55.804 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:56.007 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:56.008 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:56.216 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:56.218 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:56.410 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:56.412 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:56.610 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:56.611 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:56.819 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:56.820 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:57.001 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:57.003 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:57.018 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:57.019 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:57.210 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:57.212 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:57.425 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:57.426 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:57.601 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:57.602 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:57.801 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:57.802 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:57.954 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 1 endpoints
+08-08 16:35:58.071 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:58.073 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:58.220 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:58.221 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:58.437 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:58.438 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:58.621 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:58.623 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:58.805 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:58.806 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:58.829 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:58.830 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:59.017 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:59.018 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:59.412 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:59.413 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:35:59.423 22947 22947 D NearbyTransportMgr: ControlMessage from QSCJ: ClockSyncRequest
+08-08 16:35:59.424 22947 22947 D NearbyTransportMgr: sendControlMessage to QSCJ: ClockSyncResponse
+08-08 16:36:00.963 22947 22947 W NearbyTransportMgr: Payload transfer failed to QSCJ
+08-08 16:36:00.967 22947 22947 W NearbyTransportMgr: Payload transfer failed to QSCJ
+08-08 16:36:00.969 22947 22947 W NearbyTransportMgr: Payload transfer failed to QSCJ
+08-08 16:36:00.970 22947 22947 W NearbyTransportMgr: Payload transfer failed to QSCJ
+08-08 16:36:00.971 22947 22947 W NearbyTransportMgr: Payload transfer failed to QSCJ
+08-08 16:36:00.971 22947 22947 W NearbyTransportMgr: Payload transfer failed to QSCJ
+08-08 16:36:00.972 22947 22947 W NearbyTransportMgr: Payload transfer failed to QSCJ
+08-08 16:36:00.974 22947 22947 D NearbyTransportMgr: onDisconnected: QSCJ
+08-08 16:36:00.974 22947 22947 D SessionCoordinator: Host: stopped audio sender for QSCJ
+08-08 16:36:00.974 22947 22947 W NearbyTransportMgr: Payload transfer failed to QSCJ
+08-08 16:36:00.975 22947 23456 D SessionCoordinator: Host: audio sender thread exited for QSCJ
+08-08 16:36:02.923 22947 22947 D NearbyTransportMgr: onConnectionInitiated: AHWY name=Infinix X669C
+08-08 16:36:02.932 22947 22947 D NearbyTransportMgr: onConnectionResult: AHWY SUCCESS (isHostMode=true)
+08-08 16:36:02.932 22947 22947 D SessionCoordinator: Host: guest connected — AHWY (Infinix X669C)
+08-08 16:36:02.934 22947 22947 D SessionCoordinator: Host: started audio sender for AHWY
+08-08 16:36:03.008 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 1 endpoints
+08-08 16:36:03.010 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: RejoinRequest
+08-08 16:36:03.010 22947 22947 D SessionCoordinator: Host: RejoinRequest from AHWY (prev=B4PR)
+08-08 16:36:03.033 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: GuestJoined
+08-08 16:36:03.033 22947 22947 D SessionCoordinator: Host: GuestJoined from Infinix X669C
+08-08 16:36:03.056 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: SessionHandshake
+08-08 16:36:03.057 22947 22947 D SessionCoordinator: Host: SessionHandshake from AHWY
+08-08 16:36:03.057 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: SessionHandshakeAck
+08-08 16:36:03.103 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:03.103 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:03.307 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:03.308 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:03.516 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:03.518 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:03.720 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:03.721 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:03.926 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:03.927 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:04.122 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:04.123 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:04.310 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:04.311 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:04.544 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:04.545 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:04.709 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:04.710 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:04.918 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:04.919 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:05.153 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:05.154 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:05.318 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:05.319 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:05.550 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:05.551 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:05.726 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:05.727 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:05.926 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:05.927 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:06.129 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:06.130 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:06.320 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:06.321 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:06.515 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:06.516 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:06.737 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:06.737 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:06.952 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:06.953 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:06.958 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:06.959 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:07.130 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:07.131 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:07.330 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:07.332 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:07.538 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:07.539 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:07.752 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:07.753 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:07.940 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:07.941 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:08.014 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 1 endpoints
+08-08 16:36:08.150 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:08.151 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:08.341 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:08.342 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:08.530 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:08.531 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:08.734 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:08.734 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:08.739 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:08.741 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:08.931 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:08.932 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:09.150 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:09.151 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:09.319 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:09.320 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:09.537 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:09.538 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:09.739 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:09.739 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:09.938 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:09.939 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:10.144 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:10.147 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:10.349 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:10.350 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:10.534 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:10.535 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:10.550 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:10.551 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:10.741 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:10.742 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:10.959 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:10.960 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:11.151 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:11.153 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:11.372 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:11.373 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:11.538 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:11.539 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:11.750 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:11.751 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:11.940 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:11.942 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:12.138 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:12.139 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:12.347 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:12.349 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:12.369 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:12.371 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:12.562 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:12.563 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:12.743 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:12.744 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:12.960 22947 22947 D NearbyTransportMgr: ControlMessage from AHWY: ClockSyncRequest
+08-08 16:36:12.961 22947 22947 D NearbyTransportMgr: sendControlMessage to AHWY: ClockSyncResponse
+08-08 16:36:13.018 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 1 endpoints
+08-08 16:36:14.349 22947 22947 W NearbyTransportMgr: Payload transfer failed to AHWY
+08-08 16:36:14.350 22947 22947 D NearbyTransportMgr: onDisconnected: AHWY
+08-08 16:36:14.350 22947 22947 D SessionCoordinator: Host: stopped audio sender for AHWY
+08-08 16:36:14.350 22947 22947 W NearbyTransportMgr: Payload transfer failed to AHWY
+08-08 16:36:14.350 22947 23588 D SessionCoordinator: Host: audio sender thread exited for AHWY
+08-08 16:36:14.364 22947 22947 W NearbyTransportMgr: Payload transfer failed to AHWY
+08-08 16:36:14.364 22947 22947 W NearbyTransportMgr: Payload transfer failed to AHWY
+08-08 16:36:14.364 22947 22947 W NearbyTransportMgr: Payload transfer failed to AHWY
+08-08 16:36:14.364 22947 22947 W NearbyTransportMgr: Payload transfer failed to AHWY
+08-08 16:36:18.035 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:36:23.115 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:36:28.120 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:36:33.126 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:36:38.131 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:36:43.138 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:36:48.142 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:36:53.153 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:36:54.633 22947 22947 D NearbyTransportMgr: onConnectionInitiated: DEMH name=Infinix X669C
+08-08 16:36:54.645 22947 22947 D NearbyTransportMgr: onConnectionResult: DEMH SUCCESS (isHostMode=true)
+08-08 16:36:54.645 22947 22947 D SessionCoordinator: Host: guest connected — DEMH (Infinix X669C)
+08-08 16:36:54.647 22947 22947 D SessionCoordinator: Host: started audio sender for DEMH
+08-08 16:36:54.825 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: GuestJoined
+08-08 16:36:54.825 22947 22947 D SessionCoordinator: Host: GuestJoined from Infinix X669C
+08-08 16:36:54.839 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:36:54.841 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:36:55.021 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:36:55.022 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:36:55.224 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:36:55.225 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:36:55.433 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:36:55.434 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:36:55.625 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:36:55.627 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:36:55.833 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:36:55.834 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:36:56.018 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:36:56.019 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:36:56.232 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:36:56.233 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:36:56.428 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:36:56.430 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:36:56.624 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:36:56.625 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:36:56.767 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:36:56.767 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:36:56.977 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:36:56.978 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:36:57.183 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:36:57.184 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:36:57.372 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:36:57.374 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:36:57.564 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:36:57.572 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:36:57.797 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:36:57.798 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:36:57.976 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:36:57.978 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:36:58.158 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 1 endpoints
+08-08 16:36:58.177 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:36:58.179 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:36:58.376 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:36:58.378 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:36:58.566 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:36:58.567 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:36:58.616 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:36:58.618 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:36:58.799 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:36:58.800 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:36:58.988 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:36:58.989 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:36:59.178 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:36:59.179 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:36:59.407 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:36:59.408 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:36:59.578 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:36:59.579 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:36:59.782 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:36:59.783 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:37:00.027 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:37:00.028 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:37:00.171 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:37:00.172 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:37:00.381 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:37:00.382 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:37:00.400 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:37:00.400 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:37:00.610 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:37:00.611 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:37:00.801 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:37:00.802 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:37:00.988 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:37:00.989 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:37:01.177 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:37:01.178 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:37:01.400 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:37:01.401 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:37:01.614 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:37:01.615 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:37:01.781 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:37:01.782 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:37:02.014 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:37:02.017 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:37:02.184 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:37:02.185 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:37:02.207 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:37:02.208 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:37:02.389 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:37:02.390 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:37:02.586 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:37:02.586 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:37:02.812 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:37:02.813 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:37:02.986 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:37:02.988 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:37:03.164 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 1 endpoints
+08-08 16:37:03.207 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:37:03.209 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:37:03.393 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:37:03.393 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:37:03.597 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:37:03.598 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:37:03.813 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:37:03.814 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:37:03.995 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:37:03.996 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:37:04.012 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:37:04.013 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:37:04.245 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:37:04.246 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:37:04.435 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:37:04.436 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:37:04.618 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:37:04.619 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:37:04.809 22947 22947 D NearbyTransportMgr: ControlMessage from DEMH: ClockSyncRequest
+08-08 16:37:04.811 22947 22947 D NearbyTransportMgr: sendControlMessage to DEMH: ClockSyncResponse
+08-08 16:37:06.453 22947 22947 W NearbyTransportMgr: Payload transfer failed to DEMH
+08-08 16:37:06.453 22947 22947 W NearbyTransportMgr: Payload transfer failed to DEMH
+08-08 16:37:06.455 22947 22947 W NearbyTransportMgr: Payload transfer failed to DEMH
+08-08 16:37:06.456 22947 22947 W NearbyTransportMgr: Payload transfer failed to DEMH
+08-08 16:37:06.457 22947 22947 W NearbyTransportMgr: Payload transfer failed to DEMH
+08-08 16:37:06.462 22947 22947 D NearbyTransportMgr: onDisconnected: DEMH
+08-08 16:37:06.463 22947 22947 D SessionCoordinator: Host: stopped audio sender for DEMH
+08-08 16:37:06.463 22947 22947 W NearbyTransportMgr: Payload transfer failed to DEMH
+08-08 16:37:06.465 22947 24121 D SessionCoordinator: Host: audio sender thread exited for DEMH
+08-08 16:37:08.169 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:37:13.198 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:37:16.305 22947 22947 D NearbyTransportMgr: onConnectionInitiated: LAK7 name=Infinix X669C
+08-08 16:37:16.316 22947 22947 D NearbyTransportMgr: onConnectionResult: LAK7 SUCCESS (isHostMode=true)
+08-08 16:37:16.316 22947 22947 D SessionCoordinator: Host: guest connected — LAK7 (Infinix X669C)
+08-08 16:37:16.318 22947 22947 D SessionCoordinator: Host: started audio sender for LAK7
+08-08 16:37:16.464 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: GuestJoined
+08-08 16:37:16.464 22947 22947 D SessionCoordinator: Host: GuestJoined from Infinix X669C
+08-08 16:37:16.482 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: SessionHandshake
+08-08 16:37:16.482 22947 22947 D SessionCoordinator: Host: SessionHandshake from LAK7
+08-08 16:37:16.483 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: SessionHandshakeAck
+08-08 16:37:16.711 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:16.712 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:16.901 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:16.902 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:17.158 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:17.159 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:17.314 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:17.315 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:17.516 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:17.516 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:17.742 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:17.743 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:17.916 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:17.917 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:18.142 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:18.143 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:18.204 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 1 endpoints
+08-08 16:37:18.314 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:18.315 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:18.534 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:18.535 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:18.692 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:18.693 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:18.890 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:18.891 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:19.080 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:19.081 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:19.301 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:19.303 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:19.487 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:19.488 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:19.683 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:19.684 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:19.893 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:19.895 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:20.134 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:20.135 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:20.296 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:20.298 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:20.490 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:20.492 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:20.542 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:20.543 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:20.792 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:20.793 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:20.967 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:20.968 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:21.159 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:21.160 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:21.471 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:21.471 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:21.569 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:21.570 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:21.756 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:21.757 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:21.948 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:21.950 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:22.170 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:22.171 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:22.379 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:22.379 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:22.384 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:22.385 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:22.567 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:22.569 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:22.792 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:22.793 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:22.959 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:22.960 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:23.170 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:23.171 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:23.211 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 1 endpoints
+08-08 16:37:23.359 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:23.360 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:23.551 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:23.552 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:23.806 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:23.807 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:23.973 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:23.974 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:24.182 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:24.183 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:24.185 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:24.186 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:24.374 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:24.375 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:24.575 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:24.577 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:24.812 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:24.813 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:24.968 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:24.969 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:25.184 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:25.186 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:25.376 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:25.378 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:25.569 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:25.571 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:25.767 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:25.769 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:26.019 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:26.020 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:26.022 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:26.023 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:26.197 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:26.199 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:26.632 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:26.633 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:26.642 22947 22947 D NearbyTransportMgr: ControlMessage from LAK7: ClockSyncRequest
+08-08 16:37:26.643 22947 22947 D NearbyTransportMgr: sendControlMessage to LAK7: ClockSyncResponse
+08-08 16:37:28.133 22947 22947 D NearbyTransportMgr: onDisconnected: LAK7
+08-08 16:37:28.135 22947 22947 D SessionCoordinator: Host: stopped audio sender for LAK7
+08-08 16:37:28.135 22947 24312 D SessionCoordinator: Host: audio sender thread exited for LAK7
+08-08 16:37:28.135 22947 22947 W NearbyTransportMgr: Payload transfer failed to LAK7
+08-08 16:37:28.139 22947 22947 W NearbyTransportMgr: Payload transfer failed to LAK7
+08-08 16:37:28.139 22947 22947 W NearbyTransportMgr: Payload transfer failed to LAK7
+08-08 16:37:28.140 22947 22947 W NearbyTransportMgr: Payload transfer failed to LAK7
+08-08 16:37:28.140 22947 22947 W NearbyTransportMgr: Payload transfer failed to LAK7
+08-08 16:37:28.140 22947 22947 W NearbyTransportMgr: Payload transfer failed to LAK7
+08-08 16:37:28.215 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:37:31.022 22947 22947 D NearbyTransportMgr: broadcastControlMessage: PlaybackState to 0 endpoints
+08-08 16:37:33.234 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:37:38.243 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:37:41.315 22947 22947 D NearbyTransportMgr: onConnectionInitiated: WIJP name=Infinix X669C
+08-08 16:37:41.329 22947 22947 D NearbyTransportMgr: onConnectionResult: WIJP SUCCESS (isHostMode=true)
+08-08 16:37:41.329 22947 22947 D SessionCoordinator: Host: guest connected — WIJP (Infinix X669C)
+08-08 16:37:41.331 22947 22947 D SessionCoordinator: Host: started audio sender for WIJP
+08-08 16:37:41.451 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: GuestJoined
+08-08 16:37:41.451 22947 22947 D SessionCoordinator: Host: GuestJoined from Infinix X669C
+08-08 16:37:41.457 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: SessionHandshake
+08-08 16:37:41.457 22947 22947 D SessionCoordinator: Host: SessionHandshake from WIJP
+08-08 16:37:41.458 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: SessionHandshakeAck
+08-08 16:37:41.610 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:41.611 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:41.779 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:41.780 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:41.976 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:41.977 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:42.190 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:42.191 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:42.397 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:42.399 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:42.577 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:42.578 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:42.787 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:42.789 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:42.981 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:42.983 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:43.198 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:43.199 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:43.251 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 1 endpoints
+08-08 16:37:43.373 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:43.374 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:43.465 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:43.467 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:43.669 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:43.671 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:43.865 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:43.866 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:44.051 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:44.051 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:44.263 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:44.265 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:44.487 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:44.488 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:44.665 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:44.666 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:44.857 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:44.858 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:45.075 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:45.076 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:45.258 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:45.259 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:45.326 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:45.327 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:45.540 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:45.541 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:45.760 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:45.762 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:45.929 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:45.930 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:46.141 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:46.142 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:46.414 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:46.415 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:46.551 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:46.551 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:46.764 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:46.764 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:46.939 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:46.941 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:47.151 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:47.153 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:47.292 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:47.293 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:47.467 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:47.468 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:47.666 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:47.668 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:47.868 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:47.870 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:48.078 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:48.080 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:48.269 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 1 endpoints
+08-08 16:37:48.287 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:48.289 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:48.463 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:48.464 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:48.726 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:48.726 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:48.862 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:48.863 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:49.072 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:49.074 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:49.156 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:49.158 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:49.359 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:49.360 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:49.555 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:49.557 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:49.767 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:49.768 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:49.954 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:49.955 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:50.187 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:50.187 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:50.349 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:50.350 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:50.644 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:50.645 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:50.803 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:50.804 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:50.974 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:50.974 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:51.047 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:51.048 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:51.191 22947 22947 D NearbyTransportMgr: broadcastControlMessage: MediaChanged to 1 endpoints
+08-08 16:37:51.191 22947 22947 D NearbyTransportMgr: broadcastControlMessage: PlaybackState to 1 endpoints
+08-08 16:37:51.450 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:51.451 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:51.558 22947 22947 D NearbyTransportMgr: ControlMessage from WIJP: ClockSyncRequest
+08-08 16:37:51.558 22947 22947 D NearbyTransportMgr: sendControlMessage to WIJP: ClockSyncResponse
+08-08 16:37:51.568 22947 22947 D SessionCoordinator: Restored session: role=Host, id=f4e44213-fe94-4acc-baf4-b6c358e9d84a, code=FN4P09
+08-08 16:37:52.258 22947 22947 D NearbyTransportMgr: onDisconnected: WIJP
+08-08 16:37:52.259 22947 22947 D SessionCoordinator: Host: stopped audio sender for WIJP
+08-08 16:37:52.259 22947 24569 D SessionCoordinator: Host: audio sender thread exited for WIJP
+08-08 16:37:53.487 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:37:58.512 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:38:03.529 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:38:08.554 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:38:13.805 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:38:17.831 22947 22947 D NearbyTransportMgr: broadcastControlMessage: MediaChanged to 0 endpoints
+08-08 16:38:17.832 22947 22947 D NearbyTransportMgr: broadcastControlMessage: PlaybackState to 0 endpoints
+08-08 16:38:17.836 22947 22947 D NearbyTransportMgr: broadcastControlMessage: SeekTo to 0 endpoints
+08-08 16:38:18.808 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:38:18.929 22947 22947 D NearbyTransportMgr: broadcastControlMessage: PlaybackState to 0 endpoints
+08-08 16:38:23.814 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:38:28.820 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:38:33.827 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:38:38.837 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:38:39.681 22947 22947 D NearbyTransportMgr: onConnectionInitiated: B886 name=Infinix X669C
+08-08 16:38:39.691 22947 22947 D NearbyTransportMgr: onConnectionResult: B886 SUCCESS (isHostMode=true)
+08-08 16:38:39.691 22947 22947 D SessionCoordinator: Host: guest connected — B886 (Infinix X669C)
+08-08 16:38:39.692 22947 22947 D SessionCoordinator: Host: started audio sender for B886
+08-08 16:38:39.692 22947 22947 D SessionCoordinator: Host: latecomer join — sending PlaybackState to B886
+08-08 16:38:39.694 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: PlaybackState
+08-08 16:38:39.880 22947 22947 D NearbyTransportMgr: ControlMessage from B886: GuestJoined
+08-08 16:38:39.880 22947 22947 D SessionCoordinator: Host: GuestJoined from Infinix X669C
+08-08 16:38:39.890 22947 22947 D NearbyTransportMgr: ControlMessage from B886: SessionHandshake
+08-08 16:38:39.890 22947 22947 D SessionCoordinator: Host: SessionHandshake from B886
+08-08 16:38:39.894 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: SessionHandshakeAck
+08-08 16:38:40.149 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:40.150 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:40.327 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:40.328 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:40.568 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:40.569 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:40.775 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:40.776 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:40.896 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:40.897 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:41.108 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:41.108 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:41.301 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:41.302 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:41.545 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:41.548 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:41.716 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:41.717 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:41.907 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:41.908 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:42.166 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:42.167 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:42.391 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:42.392 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:42.533 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:42.535 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:42.725 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:42.726 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:43.007 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:43.008 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:43.108 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:43.109 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:43.313 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:43.314 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:43.527 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:43.528 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:43.720 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:43.721 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:43.841 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 1 endpoints
+08-08 16:38:43.927 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:43.928 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:43.934 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:43.935 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:44.215 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:44.217 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:44.324 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:44.326 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:44.533 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:44.534 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:44.969 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:44.970 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:44.984 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:44.986 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:45.175 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:45.176 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:45.358 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:45.359 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:45.580 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:45.581 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:45.754 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:45.754 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:45.769 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:45.770 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:46.029 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:46.030 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:46.270 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:46.271 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:46.365 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:46.366 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:46.580 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:46.581 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:46.778 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:46.779 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:46.983 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:46.983 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:47.165 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:47.167 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:47.374 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:47.375 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:47.575 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:47.576 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:47.616 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:47.617 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:47.840 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:47.841 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:47.982 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:47.983 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:48.174 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:48.174 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:48.397 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:48.398 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:48.581 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:48.583 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:48.777 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:48.779 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:48.845 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 1 endpoints
+08-08 16:38:49.010 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:49.011 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:49.180 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:49.182 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:49.373 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:49.374 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:49.404 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:49.405 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:49.586 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:49.588 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:49.805 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:49.806 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:49.990 22947 22947 D NearbyTransportMgr: ControlMessage from B886: ClockSyncRequest
+08-08 16:38:49.991 22947 22947 D NearbyTransportMgr: sendControlMessage to B886: ClockSyncResponse
+08-08 16:38:51.378 22947 22947 W NearbyTransportMgr: Payload transfer failed to B886
+08-08 16:38:51.697 22947 22947 D NearbyTransportMgr: onDisconnected: B886
+08-08 16:38:51.698 22947 22947 D SessionCoordinator: Host: stopped audio sender for B886
+08-08 16:38:51.698 22947 25358 D SessionCoordinator: Host: audio sender thread exited for B886
+08-08 16:38:51.708 22947 22947 W NearbyTransportMgr: Payload transfer failed to B886
+08-08 16:38:51.708 22947 22947 W NearbyTransportMgr: Payload transfer failed to B886
+08-08 16:38:51.708 22947 22947 W NearbyTransportMgr: Payload transfer failed to B886
+08-08 16:38:51.708 22947 22947 W NearbyTransportMgr: Payload transfer failed to B886
+08-08 16:38:51.708 22947 22947 W NearbyTransportMgr: Payload transfer failed to B886
+08-08 16:38:51.708 22947 22947 W NearbyTransportMgr: Payload transfer failed to B886
+08-08 16:38:51.708 22947 22947 W NearbyTransportMgr: Payload transfer failed to B886
+08-08 16:38:53.852 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:38:56.960 22947 22947 D NearbyTransportMgr: broadcastControlMessage: SeekTo to 0 endpoints
+08-08 16:38:56.964 22947 22947 D NearbyTransportMgr: broadcastControlMessage: PlaybackState to 0 endpoints
+08-08 16:38:57.298 22947 22947 D NearbyTransportMgr: broadcastControlMessage: SeekTo to 0 endpoints
+08-08 16:38:57.665 22947 22947 D NearbyTransportMgr: broadcastControlMessage: SeekTo to 0 endpoints
+08-08 16:38:57.962 22947 22947 D NearbyTransportMgr: broadcastControlMessage: SeekTo to 0 endpoints
+08-08 16:38:58.415 22947 22947 D NearbyTransportMgr: broadcastControlMessage: PlaybackState to 0 endpoints
+08-08 16:38:58.858 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:39:00.083 22947 22947 D NearbyTransportMgr: broadcastControlMessage: SeekTo to 0 endpoints
+08-08 16:39:00.086 22947 22947 D NearbyTransportMgr: broadcastControlMessage: PlaybackState to 0 endpoints
+08-08 16:39:00.368 22947 22947 D NearbyTransportMgr: broadcastControlMessage: SeekTo to 0 endpoints
+08-08 16:39:00.934 22947 22947 D NearbyTransportMgr: broadcastControlMessage: PlaybackState to 0 endpoints
+08-08 16:39:03.634 22947 22947 D NearbyTransportMgr: broadcastControlMessage: SeekTo to 0 endpoints
+08-08 16:39:03.637 22947 22947 D NearbyTransportMgr: broadcastControlMessage: PlaybackState to 0 endpoints
+08-08 16:39:03.862 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:39:03.877 22947 22947 D NearbyTransportMgr: broadcastControlMessage: PlaybackState to 0 endpoints
+08-08 16:39:04.387 22947 22947 D NearbyTransportMgr: broadcastControlMessage: SeekTo to 0 endpoints
+08-08 16:39:04.390 22947 22947 D NearbyTransportMgr: broadcastControlMessage: PlaybackState to 0 endpoints
+08-08 16:39:04.626 22947 22947 D NearbyTransportMgr: broadcastControlMessage: PlaybackState to 0 endpoints
+08-08 16:39:05.124 22947 22947 D NearbyTransportMgr: broadcastControlMessage: SeekTo to 0 endpoints
+08-08 16:39:05.128 22947 22947 D NearbyTransportMgr: broadcastControlMessage: PlaybackState to 0 endpoints
+08-08 16:39:05.345 22947 22947 D NearbyTransportMgr: broadcastControlMessage: PlaybackState to 0 endpoints
+08-08 16:39:05.895 22947 22947 D NearbyTransportMgr: broadcastControlMessage: SeekTo to 0 endpoints
+08-08 16:39:05.899 22947 22947 D NearbyTransportMgr: broadcastControlMessage: PlaybackState to 0 endpoints
+08-08 16:39:06.158 22947 22947 D NearbyTransportMgr: broadcastControlMessage: PlaybackState to 0 endpoints
+08-08 16:39:06.895 22947 22947 D NearbyTransportMgr: broadcastControlMessage: PlaybackState to 0 endpoints
+08-08 16:39:06.898 22947 22947 D NearbyTransportMgr: broadcastControlMessage: SeekTo to 0 endpoints
+08-08 16:39:06.939 22947 22947 D NearbyTransportMgr: broadcastControlMessage: SeekTo to 0 endpoints
+08-08 16:39:07.298 22947 22947 D NearbyTransportMgr: broadcastControlMessage: PlaybackState to 0 endpoints
+08-08 16:39:08.903 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:39:09.019 22947 22947 D NearbyTransportMgr: broadcastControlMessage: PlaybackState to 0 endpoints
+08-08 16:39:09.023 22947 22947 D NearbyTransportMgr: broadcastControlMessage: SeekTo to 0 endpoints
+08-08 16:39:09.483 22947 22947 D NearbyTransportMgr: broadcastControlMessage: PlaybackState to 0 endpoints
+08-08 16:39:11.834 22947 22947 D NearbyTransportMgr: broadcastControlMessage: PlaybackState to 0 endpoints
+08-08 16:39:12.840 22947 22947 D NearbyTransportMgr: broadcastControlMessage: SeekTo to 0 endpoints
+08-08 16:39:12.883 22947 22947 D NearbyTransportMgr: broadcastControlMessage: SeekTo to 0 endpoints
+08-08 16:39:12.914 22947 22947 D NearbyTransportMgr: broadcastControlMessage: SeekTo to 0 endpoints
+08-08 16:39:12.938 22947 22947 D NearbyTransportMgr: broadcastControlMessage: SeekTo to 0 endpoints
+08-08 16:39:12.957 22947 22947 D NearbyTransportMgr: broadcastControlMessage: SeekTo to 0 endpoints
+08-08 16:39:12.979 22947 22947 D NearbyTransportMgr: broadcastControlMessage: SeekTo to 0 endpoints
+08-08 16:39:13.002 22947 22947 D NearbyTransportMgr: broadcastControlMessage: SeekTo to 0 endpoints
+08-08 16:39:13.940 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:39:18.950 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:39:23.962 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:39:28.976 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:39:33.982 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:39:38.986 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:39:43.990 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:39:48.999 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:39:54.008 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:39:59.018 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:40:04.035 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:40:09.042 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:40:14.049 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:40:19.057 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:40:24.063 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:40:24.592 22947 22947 D NearbyTransportMgr: onConnectionInitiated: L4T8 name=Infinix X669C
+08-08 16:40:24.611 22947 22947 D NearbyTransportMgr: onConnectionResult: L4T8 SUCCESS (isHostMode=true)
+08-08 16:40:24.611 22947 22947 D SessionCoordinator: Host: guest connected — L4T8 (Infinix X669C)
+08-08 16:40:24.612 22947 22947 D SessionCoordinator: Host: started audio sender for L4T8
+08-08 16:40:24.612 22947 22947 D SessionCoordinator: Host: latecomer join — sending PlaybackState to L4T8
+08-08 16:40:24.612 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: PlaybackState
+08-08 16:40:24.731 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: GuestJoined
+08-08 16:40:24.731 22947 22947 D SessionCoordinator: Host: GuestJoined from Infinix X669C
+08-08 16:40:24.741 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:24.742 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:24.931 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:24.932 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:25.130 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:25.130 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:25.345 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:25.345 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:25.579 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:25.580 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:25.769 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:25.770 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:25.928 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:25.929 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:26.129 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:26.130 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:26.335 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:26.337 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:26.572 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:26.574 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:26.592 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:26.593 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:26.747 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:26.748 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:26.956 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:26.958 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:27.181 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:27.183 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:27.363 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:27.364 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:27.550 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:27.552 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:27.755 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:27.756 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:28.025 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:28.027 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:28.153 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:28.154 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:28.381 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:28.382 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:28.432 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:28.433 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:28.663 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:28.664 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:28.749 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:28.751 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:28.932 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:28.934 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:29.070 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 1 endpoints
+08-08 16:40:29.178 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:29.179 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:29.426 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:29.428 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:29.560 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:29.562 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:29.772 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:29.774 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:29.941 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:29.943 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:30.138 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:30.140 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:30.151 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:30.152 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:30.354 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:30.354 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:30.545 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:30.547 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:30.787 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:30.789 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:30.950 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:30.952 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:31.223 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:31.224 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:31.395 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:31.395 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:31.551 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:31.552 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:31.773 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:31.773 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:31.946 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:31.947 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:31.954 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:31.955 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:32.161 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:32.163 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:32.359 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:32.360 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:32.661 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:32.662 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:32.762 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:32.762 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:32.971 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:32.972 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:33.181 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:33.183 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:33.347 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:33.350 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:33.562 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:33.563 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:33.592 22947 22947 D NearbyTransportMgr: broadcastControlMessage: PlaybackState to 1 endpoints
+08-08 16:40:33.779 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:33.781 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:33.791 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:33.792 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:33.972 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:33.974 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:34.075 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 1 endpoints
+08-08 16:40:34.202 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:34.202 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:34.364 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:34.366 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:34.566 22947 22947 D NearbyTransportMgr: ControlMessage from L4T8: ClockSyncRequest
+08-08 16:40:34.568 22947 22947 D NearbyTransportMgr: sendControlMessage to L4T8: ClockSyncResponse
+08-08 16:40:36.400 22947 22947 W NearbyTransportMgr: Payload transfer failed to L4T8
+08-08 16:40:36.401 22947 22947 W NearbyTransportMgr: Payload transfer failed to L4T8
+08-08 16:40:36.402 22947 22947 W NearbyTransportMgr: Payload transfer failed to L4T8
+08-08 16:40:36.404 22947 22947 W NearbyTransportMgr: Payload transfer failed to L4T8
+08-08 16:40:36.405 22947 22947 W NearbyTransportMgr: Payload transfer failed to L4T8
+08-08 16:40:36.407 22947 22947 W NearbyTransportMgr: Payload transfer failed to L4T8
+08-08 16:40:36.410 22947 22947 D NearbyTransportMgr: onDisconnected: L4T8
+08-08 16:40:36.411 22947 22947 D SessionCoordinator: Host: stopped audio sender for L4T8
+08-08 16:40:36.411 22947 27435 D SessionCoordinator: Host: audio sender thread exited for L4T8
+08-08 16:40:39.093 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:40:40.426 22947 22947 D NearbyTransportMgr: broadcastControlMessage: PlaybackState to 0 endpoints
+08-08 16:40:44.128 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:40:44.130 22947 22947 D NearbyTransportMgr: broadcastControlMessage: PlaybackState to 0 endpoints
+08-08 16:40:46.446 22947 22947 D NearbyTransportMgr: broadcastControlMessage: PlaybackState to 0 endpoints
+08-08 16:40:47.955 22947 22947 D NearbyTransportMgr: broadcastControlMessage: SeekTo to 0 endpoints
+08-08 16:40:49.134 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:40:49.941 22947 22947 D NearbyTransportMgr: broadcastControlMessage: PlaybackState to 0 endpoints
+08-08 16:40:54.146 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:40:59.154 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:41:04.161 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:41:09.182 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:41:14.219 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:41:14.244 22947 22947 D NearbyTransportMgr: broadcastControlMessage: MediaChanged to 0 endpoints
+08-08 16:41:14.244 22947 22947 D NearbyTransportMgr: broadcastControlMessage: PlaybackState to 0 endpoints
+08-08 16:41:14.247 22947 22947 D NearbyTransportMgr: broadcastControlMessage: PlaybackState to 0 endpoints
+08-08 16:41:19.468 22947 22947 D NearbyTransportMgr: broadcastControlMessage: Heartbeat to 0 endpoints
+08-08 16:41:19.524 22947 22947 D NearbyTransportMgr: broadcastControlMessage: SessionEnded to 0 endpoints
+08-08 16:41:19.537 22947 22947 D NearbyTransportMgr: stopAdvertising
+08-08 16:41:19.540 22947 22947 D NearbyTransportMgr: disconnectAll: 0 endpoints
+08-08 16:41:44.124 22947 22947 D GuestGreetingMgr: Preloading 5 chime clips
+08-08 16:41:44.126 22947 22947 D NearbyTransportMgr: startDiscovery
+08-08 16:41:44.216 22947 22947 D NearbyTransportMgr: Discovery started
+08-08 16:41:51.069 22947 22947 D NearbyTransportMgr: Endpoint found: A4QD name=HearYet-MNZPV7
+08-08 16:41:51.069 22947 22947 D SessionCoordinator: Guest: matching host found — HearYet-MNZPV7
+08-08 16:41:51.070 22947 22947 D NearbyTransportMgr: stopDiscovery
+08-08 16:41:51.071 22947 22947 D NearbyTransportMgr: requestConnection: A4QD as RMX3853
+08-08 16:41:54.739 22947 22947 D NearbyTransportMgr: onConnectionInitiated: A4QD name=HearYet-MNZPV7
+08-08 16:41:54.744 22947 22947 D NearbyTransportMgr: Connection request sent to A4QD
+08-08 16:41:54.954 22947 22947 D NearbyTransportMgr: onConnectionResult: A4QD SUCCESS (isHostMode=false)
+08-08 16:41:54.954 22947 22947 D SessionCoordinator: Guest: connected to host — A4QD
+08-08 16:41:55.008 22947 22947 D NearbyTransportMgr: sendControlMessage to A4QD: GuestJoined
+08-08 16:41:55.009 22947 22947 D NearbyTransportMgr: sendControlMessage to A4QD: SessionHandshake
+08-08 16:41:55.035 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: PlaybackState
+08-08 16:41:55.044 22947 22947 D GuestGreetingMgr: playChime: playing soundId=5 volume=0.075
+08-08 16:41:55.185 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: SessionHandshakeAck
+08-08 16:41:55.185 22947 22947 D SessionCoordinator: Guest: session handshake confirmed
+08-08 16:41:55.187 22947 22974 D ClockSyncManager: Starting sync batch to A4QD
+08-08 16:41:55.189 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:41:55.270 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:41:55.272 22947 22974 V ClockSyncManager: Sample: offset=-30978.398ms rtt=84.001ms
+08-08 16:41:55.389 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:41:55.459 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:41:55.460 22947 22974 V ClockSyncManager: Sample: offset=-30981.231ms rtt=71.224ms
+08-08 16:41:55.588 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:41:55.647 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:41:55.648 22947 22974 V ClockSyncManager: Sample: offset=-30984.191ms rtt=59.529ms
+08-08 16:41:55.791 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:41:55.844 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:41:55.846 22947 22974 V ClockSyncManager: Sample: offset=-30989.619ms rtt=56.770ms
+08-08 16:41:55.991 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:41:56.095 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:41:56.097 22947 22974 V ClockSyncManager: Sample: offset=-31000.771ms rtt=107.672ms
+08-08 16:41:56.191 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:41:56.273 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:41:56.274 22947 22974 V ClockSyncManager: Sample: offset=-30974.433ms rtt=85.262ms
+08-08 16:41:56.390 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:41:56.532 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:41:56.534 22947 22974 V ClockSyncManager: Sample: offset=-31021.783ms rtt=144.972ms
+08-08 16:41:56.593 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:41:56.710 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:41:56.712 22947 22974 V ClockSyncManager: Sample: offset=-30988.457ms rtt=121.535ms
+08-08 16:41:56.791 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:41:56.883 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:41:56.885 22947 22974 V ClockSyncManager: Sample: offset=-30997.187ms rtt=95.539ms
+08-08 16:41:56.991 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:41:57.070 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:41:57.071 22947 22974 V ClockSyncManager: Sample: offset=-30981.261ms rtt=81.980ms
+08-08 16:41:57.073 22947 22974 D ClockSyncManager: Batch stddev=13.919ms — not converged, re-batching until deadline
+08-08 16:41:57.075 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:41:57.135 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:41:57.138 22947 22974 V ClockSyncManager: Sample: offset=-30982.777ms rtt=63.427ms
+08-08 16:41:57.277 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:41:57.344 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:41:57.346 22947 22974 V ClockSyncManager: Sample: offset=-30975.762ms rtt=69.641ms
+08-08 16:41:57.480 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: Heartbeat
+08-08 16:41:57.480 22947 22947 V SessionCoordinator: Guest: heartbeat received
+08-08 16:41:57.480 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:41:57.539 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:41:57.540 22947 22974 V ClockSyncManager: Sample: offset=-30979.025ms rtt=60.821ms
+08-08 16:41:57.676 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:41:57.741 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:41:57.743 22947 22974 V ClockSyncManager: Sample: offset=-30985.816ms rtt=67.418ms
+08-08 16:41:57.879 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:41:58.009 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:41:58.010 22947 22974 V ClockSyncManager: Sample: offset=-31001.411ms rtt=133.507ms
+08-08 16:41:58.078 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:41:58.162 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:41:58.164 22947 22974 V ClockSyncManager: Sample: offset=-30966.560ms rtt=87.557ms
+08-08 16:41:58.276 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:41:58.342 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:41:58.343 22947 22974 V ClockSyncManager: Sample: offset=-30982.575ms rtt=67.622ms
+08-08 16:41:58.479 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:41:58.538 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:41:58.539 22947 22974 V ClockSyncManager: Sample: offset=-30978.618ms rtt=63.052ms
+08-08 16:41:58.678 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:41:58.732 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:41:58.735 22947 22974 V ClockSyncManager: Sample: offset=-30983.102ms rtt=58.794ms
+08-08 16:41:58.880 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:41:58.942 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:41:58.943 22947 22974 V ClockSyncManager: Sample: offset=-30981.969ms rtt=66.648ms
+08-08 16:41:58.946 22947 22974 D ClockSyncManager: Batch stddev=8.759ms — not converged, re-batching until deadline
+08-08 16:41:58.948 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:41:59.059 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:41:59.061 22947 22974 V ClockSyncManager: Sample: offset=-30971.844ms rtt=113.474ms
+08-08 16:41:59.150 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:41:59.247 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:41:59.250 22947 22974 V ClockSyncManager: Sample: offset=-30963.097ms rtt=100.455ms
+08-08 16:41:59.349 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:41:59.459 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:41:59.460 22947 22974 V ClockSyncManager: Sample: offset=-30990.105ms rtt=111.327ms
+08-08 16:41:59.549 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:41:59.603 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:41:59.605 22947 22974 V ClockSyncManager: Sample: offset=-30979.919ms rtt=56.492ms
+08-08 16:41:59.748 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:41:59.784 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:41:59.786 22947 22974 V ClockSyncManager: Sample: offset=-30986.993ms rtt=36.610ms
+08-08 16:41:59.948 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:41:59.992 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:41:59.995 22947 22974 V ClockSyncManager: Sample: offset=-30983.412ms rtt=46.715ms
+08-08 16:42:00.149 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:42:00.201 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:42:00.201 22947 22974 V ClockSyncManager: Sample: offset=-30978.960ms rtt=53.388ms
+08-08 16:42:00.349 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:42:00.430 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:42:00.431 22947 22974 V ClockSyncManager: Sample: offset=-30970.068ms rtt=83.099ms
+08-08 16:42:00.549 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:42:00.597 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:42:00.600 22947 22974 V ClockSyncManager: Sample: offset=-30980.819ms rtt=50.741ms
+08-08 16:42:00.748 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:42:00.856 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:42:00.857 22947 22974 V ClockSyncManager: Sample: offset=-30995.790ms rtt=108.575ms
+08-08 16:42:00.857 22947 22974 D ClockSyncManager: Batch stddev=9.801ms — not converged, re-batching until deadline
+08-08 16:42:00.858 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:42:00.967 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:42:00.968 22947 22974 V ClockSyncManager: Sample: offset=-30984.315ms rtt=110.601ms
+08-08 16:42:01.059 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:42:01.128 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:42:01.130 22947 22974 V ClockSyncManager: Sample: offset=-31005.020ms rtt=71.836ms
+08-08 16:42:01.259 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:42:01.332 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:42:01.333 22947 22974 V ClockSyncManager: Sample: offset=-31005.332ms rtt=74.282ms
+08-08 16:42:01.462 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:42:01.592 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:42:01.593 22947 22974 V ClockSyncManager: Sample: offset=-30984.578ms rtt=131.284ms
+08-08 16:42:01.659 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:42:01.756 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:42:01.758 22947 22974 V ClockSyncManager: Sample: offset=-30988.453ms rtt=98.971ms
+08-08 16:42:01.858 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:42:01.951 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:42:01.952 22947 22974 V ClockSyncManager: Sample: offset=-30995.255ms rtt=93.839ms
+08-08 16:42:02.058 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:42:02.157 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:42:02.158 22947 22974 V ClockSyncManager: Sample: offset=-30993.212ms rtt=100.407ms
+08-08 16:42:02.258 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:42:02.374 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:42:02.375 22947 22974 V ClockSyncManager: Sample: offset=-30981.034ms rtt=117.290ms
+08-08 16:42:02.458 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:42:02.473 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: Heartbeat
+08-08 16:42:02.473 22947 22947 V SessionCoordinator: Guest: heartbeat received
+08-08 16:42:02.547 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:42:02.550 22947 22974 V ClockSyncManager: Sample: offset=-30999.752ms rtt=90.130ms
+08-08 16:42:02.659 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:42:02.728 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:42:02.729 22947 22974 V ClockSyncManager: Sample: offset=-30994.774ms rtt=70.679ms
+08-08 16:42:02.730 22947 22974 D ClockSyncManager: Batch stddev=8.566ms — not converged, re-batching until deadline
+08-08 16:42:02.731 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:42:02.787 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:42:02.788 22947 22974 V ClockSyncManager: Sample: offset=-30990.566ms rtt=57.428ms
+08-08 16:42:02.932 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:42:03.132 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:42:03.246 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:42:03.248 22947 22974 V ClockSyncManager: Sample: offset=-30884.414ms rtt=315.789ms
+08-08 16:42:03.297 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:42:03.333 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:42:03.334 22947 22974 V ClockSyncManager: Sample: offset=-30983.089ms rtt=202.167ms
+08-08 16:42:03.383 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:42:03.532 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:42:03.534 22947 22974 V ClockSyncManager: Sample: offset=-31062.621ms rtt=201.383ms
+08-08 16:42:03.611 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:42:03.734 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:42:03.735 22947 22974 V ClockSyncManager: Sample: offset=-31049.306ms rtt=203.316ms
+08-08 16:42:03.794 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:42:03.934 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:42:03.935 22947 22974 V ClockSyncManager: Sample: offset=-31066.843ms rtt=202.783ms
+08-08 16:42:03.997 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:42:04.132 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:42:04.132 22947 22974 V ClockSyncManager: Sample: offset=-31056.055ms rtt=200.782ms
+08-08 16:42:04.218 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:42:04.331 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:42:04.331 22947 22974 V ClockSyncManager: Sample: offset=-31052.190ms rtt=200.427ms
+08-08 16:42:04.439 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:42:04.531 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:42:04.531 22947 22974 V ClockSyncManager: Sample: offset=-31024.890ms rtt=200.440ms
+08-08 16:42:04.531 22947 22974 D ClockSyncManager: Batch stddev=58.982ms — not converged, re-batching until deadline
+08-08 16:42:04.532 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:42:04.574 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:42:04.575 22947 22974 V ClockSyncManager: Sample: offset=-30993.788ms rtt=44.370ms
+08-08 16:42:04.624 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:42:04.733 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:42:04.734 22947 22974 V ClockSyncManager: Sample: offset=-31047.387ms rtt=202.240ms
+08-08 16:42:04.862 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:42:04.935 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:42:04.935 22947 22974 V ClockSyncManager: Sample: offset=-31067.895ms rtt=202.540ms
+08-08 16:42:05.017 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:42:05.134 22947 22974 D NearbyTransportMgr: sendControlMessage to A4QD: ClockSyncRequest
+08-08 16:42:05.134 22947 22974 V ClockSyncManager: Sample: offset=-31037.938ms rtt=200.971ms
+08-08 16:42:05.189 22947 22947 D NearbyTransportMgr: ControlMessage from A4QD: ClockSyncResponse
+08-08 16:42:05.334 22947 22974 D ClockSyncManager: Batch stddev=31.253ms — not converged, re-batching until deadline
+08-08 16:42:05.334 22947 22974 W ClockSyncManager: Sync failed to converge: stddev=31.253ms > threshold=5.0ms
+08-08 16:42:05.335 22947 22974 W SessionCoordinator: Guest sync failed to converge: stddev=31.253ms
+08-08 16:42:05.336 22947 22947 D NearbyTransportMgr: disconnect: A4QD
+08-08 16:42:05.736 22947 22947 D NearbyTransportMgr: onDisconnected: A4QD
+08-08 16:42:21.088 22947 22947 W SessionCoordinator: Guest: host unreachable after 15897ms
