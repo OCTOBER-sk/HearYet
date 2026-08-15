@@ -60,21 +60,36 @@ class NearbyTransportManager(private val context: Context) {
 
     // ── Internal state ──────────────────────────────────────────────
 
-    /** Endpoint IDs of currently connected guests (host only). */
-    private val connectedEndpoints = mutableSetOf<String>()
+    /**
+     * Endpoint IDs of currently connected guests (host only). Concurrent so the
+     * guest STREAM reader threads ([isConnected]) and the GMS/main thread
+     * ([disconnectAll]) never race on a plain set (CR2).
+     */
+    private val connectedEndpoints = java.util.concurrent.ConcurrentHashMap.newKeySet<String>()
 
     /**
      * One persistent [java.io.PipedOutputStream] per guest, feeding a single
      * long-lived STREAM payload (BE §4 — "the continuous PCM audio feed", not one
      * payload per chunk). Opened on connect, closed on disconnect.
+     *
+     * FIX 2c (CR2) — ConcurrentHashMap: written/read by the per-guest sender
+     * threads ([sendAudioChunk]) and removed by the main/GMS thread
+     * ([closeAudioStream], [disconnectAll]); a plain map was a data race.
      */
-    private val guestAudioStreams = mutableMapOf<String, java.io.PipedOutputStream>()
+    private val guestAudioStreams = java.util.concurrent.ConcurrentHashMap<String, java.io.PipedOutputStream>()
 
     /**
      * Endpoint IDs with an active continuous-STREAM reader loop. Guards against
      * spawning a duplicate reader for the same endpoint.
      */
     private val guestAudioReaders = java.util.concurrent.ConcurrentHashMap.newKeySet<String>()
+
+    /**
+     * FIX 2b (R3) — the active reader's [java.io.InputStream] per endpoint, so a
+     * duplicate STREAM payload can close the stale stream and force the old reader
+     * to exit instead of staying permanently deaf on a dead stream.
+     */
+    private val guestAudioReaderStreams = java.util.concurrent.ConcurrentHashMap<String, java.io.InputStream>()
 
     /** Read-only snapshot of connected endpoint IDs (C11 — guest list UI). */
     val connectedEndpointIds: Set<String> get() = connectedEndpoints.toSet()
@@ -110,6 +125,13 @@ class NearbyTransportManager(private val context: Context) {
 
         /** Internal pipe buffer for each guest's continuous STREAM payload (~17 frames of 3840B). */
         private const val PIPE_BUFFER_BYTES = 65_536
+
+        /**
+         * FIX 2b (R3) — how long a duplicate STREAM payload waits for the previous
+         * reader to observe EOF/close and release the reader guard before giving up
+         * (dropping the duplicate rather than running two readers for one endpoint).
+         */
+        private const val READER_HANDOVER_TIMEOUT_MS = 2_000L
 
         private const val TAG = "NearbyTransportMgr"
     }
@@ -327,6 +349,16 @@ class NearbyTransportManager(private val context: Context) {
             }
         }
         guestAudioStreams.clear()
+        // FIX 2b — close any active guest STREAM reader streams so blocked readers
+        // observe EOF and exit instead of lingering after teardown.
+        guestAudioReaderStreams.forEach { (_, input) ->
+            try {
+                input.close()
+            } catch (_: Exception) {
+            }
+        }
+        guestAudioReaderStreams.clear()
+        guestAudioReaders.clear()
         hostEndpointId = null
     }
 
@@ -405,18 +437,46 @@ class NearbyTransportManager(private val context: Context) {
 
     private fun handleStreamPayload(endpointId: String, payload: Payload) {
         val stream = payload.asStream() ?: return
+        val input = stream.asInputStream()
+
+        // FIX 2b (R3) — allow reader replacement: a second STREAM payload for an
+        // endpoint usually means the host re-opened the stream after a failure. The
+        // old continuous stream may have died silently (no EOF ever delivered), so
+        // close it to force the stale reader out instead of staying deaf forever.
+        if (guestAudioReaders.contains(endpointId)) {
+            Log.w(TAG, "handleStreamPayload: replacing active reader for $endpointId")
+            guestAudioReaderStreams.remove(endpointId)?.let { oldInput ->
+                try {
+                    oldInput.close()
+                } catch (_: Exception) {
+                }
+            }
+            // Give the old reader time to observe EOF/close and release the guard.
+            // If it never does (close didn't propagate), fall through and drop the
+            // duplicate rather than run two readers for one endpoint.
+            val deadline = System.currentTimeMillis() + READER_HANDOVER_TIMEOUT_MS
+            while (guestAudioReaders.contains(endpointId) && System.currentTimeMillis() < deadline) {
+                try {
+                    Thread.sleep(20)
+                } catch (_: InterruptedException) {
+                    Thread.currentThread().interrupt()
+                    return
+                }
+            }
+        }
+
         if (!guestAudioReaders.add(endpointId)) {
-            Log.w(TAG, "handleStreamPayload: reader already active for $endpointId — ignoring duplicate payload")
+            Log.w(TAG, "handleStreamPayload: reader still active for $endpointId — ignoring duplicate payload")
             return
         }
+        guestAudioReaderStreams[endpointId] = input
         // One dedicated reader thread per endpoint: the continuous STREAM stays open
         // for the life of the connection, so a shared executor would let one stalled
         // guest block every other guest's audio (head-of-line blocking).
         Thread({
-            val input = stream.asInputStream()
             try {
                 // Length-prefixed records arrive one after another on the same stream
-                // ([4B length][16B header][PCM]); null = stream closed / EOF / malformed.
+                // ([4B length][24B header][PCM]); null = stream closed / EOF / malformed.
                 while (isConnected(endpointId)) {
                     val chunk = AudioChunk.readFramedChunk(input) ?: break
                     onAudioChunkReceived?.invoke(chunk)
@@ -425,6 +485,9 @@ class NearbyTransportManager(private val context: Context) {
                 Log.w(TAG, "STREAM payload reader stopped for $endpointId", e)
             } finally {
                 guestAudioReaders.remove(endpointId)
+                // Only remove the entry if it still refers to THIS reader's stream —
+                // a replacement reader for the same endpoint must not be cleared.
+                guestAudioReaderStreams.remove(endpointId, input)
             }
             Log.d(TAG, "STREAM payload reader exiting for $endpointId")
         }, "HearYet-StreamReader-$endpointId").apply {

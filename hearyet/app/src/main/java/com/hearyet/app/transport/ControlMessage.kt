@@ -37,6 +37,15 @@ sealed class ControlMessage {
     @Serializable
     data object SessionEnded : ControlMessage()
 
+    /**
+     * FIX 2a (R1) — Host → guest: the host's outbound queue for this guest backed
+     * up (chronically full, so it was dropping the oldest → the guest would receive
+     * ~4s-stale chunks). The guest should flush its ring buffer and re-seed from
+     * "now" instead of staying permanently behind in the drop-cascade.
+     */
+    @Serializable
+    data object ResyncAudio : ControlMessage()
+
     @Serializable
     data class DriftReport(val driftMs: Double) : ControlMessage()
 

@@ -1,5 +1,6 @@
 package com.hearyet.app.feature.player.sync
 
+import androidx.media3.common.C
 import androidx.media3.common.audio.AudioProcessor
 import androidx.media3.common.audio.BaseAudioProcessor
 import java.nio.ByteBuffer
@@ -32,6 +33,7 @@ class SharedAudioRenderer : BaseAudioProcessor() {
     // ── Frame size ──────────────────────────────────────────────────
     private var channelCount: Int = 2
     private var sampleRateHz: Int = 48000
+    private var encoding: Int = C.ENCODING_PCM_16BIT
     private var sequenceNumber: Long = 0L
 
     /** Overflow from a previous [queueInput] that didn't align to a
@@ -49,6 +51,9 @@ class SharedAudioRenderer : BaseAudioProcessor() {
     override fun onConfigure(inputAudioFormat: AudioProcessor.AudioFormat): AudioProcessor.AudioFormat {
         sampleRateHz = inputAudioFormat.sampleRate
         channelCount = inputAudioFormat.channelCount
+        // FIX 3 — remember the actual PCM encoding so frame sizing matches the real
+        // sample width (16-bit vs float vs 24-bit), not a hardcoded 2 bytes/sample.
+        encoding = inputAudioFormat.encoding
         // Pass-through: output format identical to input format.
         return inputAudioFormat
     }
@@ -62,7 +67,7 @@ class SharedAudioRenderer : BaseAudioProcessor() {
 
         val pos = inputBuffer.position()
         val limit = inputBuffer.limit()
-        val frameBytes = frameSizeBytes(sampleRateHz, channelCount)
+        val frameBytes = frameSizeBytes(sampleRateHz, channelCount, encoding)
 
         // Chunking snapshot — pure reads from the input window, done before
         // the input is consumed below.
@@ -94,6 +99,8 @@ class SharedAudioRenderer : BaseAudioProcessor() {
                     AudioChunk(
                         hostTimestampNanos = tapTimeNanos + frameIndex * frameDurationNanos,
                         sequenceNumber = sequenceNumber++,
+                        sampleRateHz = sampleRateHz,
+                        channelCount = channelCount,
                         pcmPayload = combined.copyOfRange(offset, offset + frameBytes),
                     ),
                 )
@@ -139,6 +146,7 @@ class SharedAudioRenderer : BaseAudioProcessor() {
         sequenceNumber = 0L
         sampleRateHz = 48000
         channelCount = 2
+        encoding = C.ENCODING_PCM_16BIT
         pendingOutput = null
     }
 
@@ -146,9 +154,21 @@ class SharedAudioRenderer : BaseAudioProcessor() {
         /** Duration of each emitted frame in milliseconds. */
         const val FRAME_DURATION_MS: Int = 20
 
-        /** Bytes per 20 ms frame for 16-bit interleaved PCM. */
-        fun frameSizeBytes(sampleRateHz: Int, channelCount: Int): Int =
-            (sampleRateHz * channelCount * 2L * FRAME_DURATION_MS / 1000L).toInt()
+        /**
+         * Bytes per sample for a Media3 PCM encoding (FIX 3 — the frame size must
+         * come from the actual encoding, not a hardcoded 16-bit width).
+         */
+        fun bytesPerSample(encoding: Int): Int = when (encoding) {
+            C.ENCODING_PCM_8BIT -> 1
+            C.ENCODING_PCM_16BIT -> 2
+            C.ENCODING_PCM_24BIT -> 3
+            C.ENCODING_PCM_32BIT, C.ENCODING_PCM_FLOAT -> 4
+            else -> 2
+        }
+
+        /** Bytes per 20 ms frame for interleaved PCM at the given encoding. */
+        fun frameSizeBytes(sampleRateHz: Int, channelCount: Int, encoding: Int): Int =
+            (sampleRateHz * channelCount * bytesPerSample(encoding).toLong() * FRAME_DURATION_MS / 1000L).toInt()
 
         private val EMPTY_OUTPUT: ByteBuffer = ByteBuffer.allocateDirect(0)
     }

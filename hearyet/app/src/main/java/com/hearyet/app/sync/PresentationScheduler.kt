@@ -24,8 +24,8 @@ import java.util.concurrent.locks.LockSupport
  * - On seek/pause/media-change: flush entirely and re-seed from "now."
  */
 class PresentationScheduler(
-    val sampleRateHz: Int = 48000,
-    val channelCount: Int = 2,
+    initialSampleRateHz: Int = 48000,
+    initialChannelCount: Int = 2,
 ) {
     companion object {
         private const val TAG = "PresentationScheduler"
@@ -47,9 +47,37 @@ class PresentationScheduler(
          * (~192 KB/s of incoming PCM must not accumulate forever).
          */
         const val MAX_BUFFERED_CHUNKS: Int = 250
+
+        /**
+         * FIX 2a (R1) — consecutive late drops before the scheduler treats the
+         * schedule as fallen permanently behind and re-seeds. 10 × 20 ms = 200 ms
+         * of sustained lateness: a single jitter drop must never flush the buffer.
+         */
+        const val CONSECUTIVE_LATE_DROPS_TO_RESEED: Long = 10
+
+        /**
+         * FIX 2a (R1) — minimum gap between recovery re-seeds. Bounds thrash on a
+         * permanently backlogged link where every delivered chunk is stale: the
+         * scheduler re-syncs at most this often instead of flushing constantly.
+         */
+        private const val RESEED_MIN_INTERVAL_MS: Long = 5_000
     }
 
     // ── Configuration ───────────────────────────────────────────────
+
+    /**
+     * Current AudioTrack sample rate in Hz. FIX 3 — set from the constructor
+     * default (48kHz) and updated to the incoming chunk format when it differs,
+     * so a 44.1kHz source is played at the correct rate.
+     */
+    @Volatile
+    var sampleRateHz: Int = initialSampleRateHz
+        private set
+
+    /** Current AudioTrack channel count (FIX 3 — updated to the chunk format). */
+    @Volatile
+    var channelCount: Int = initialChannelCount
+        private set
 
     /** Current lookahead in milliseconds. Tunable per codec class. */
     @Volatile
@@ -74,6 +102,8 @@ class PresentationScheduler(
     /** Ring buffer keyed by guestPlaybackTimeNanos. */
     private val buffer = ConcurrentSkipListMap<Long, AudioChunk>()
 
+    /** @Volatile so the playback thread picks up a FIX 3 format rebuild (new track). */
+    @Volatile
     private var audioTrack: AudioTrack? = null
     private val running = AtomicBoolean(false)
     private var playbackThread: Thread? = null
@@ -83,8 +113,18 @@ class PresentationScheduler(
     @Volatile var chunksReceived: Long = 0
     @Volatile var chunksPlayed: Long = 0
     @Volatile var chunksDropped: Long = 0
+
+    /** FIX 2a (R1) — count of recovery re-seeds triggered by sustained late drops. */
+    @Volatile var reseedCount: Long = 0
+        private set
     @Volatile var bufferSize: Int = 0
         private set
+
+    /** Consecutive late drops since the last playable/written chunk (playback thread only). */
+    private var consecutiveLateDrops: Long = 0
+
+    /** nanoTime of the last recovery re-seed (playback thread only). */
+    private var lastReseedAtNanos: Long = 0L
 
     /**
      * Set to true while flush() is executing pause→flush→play on the AudioTrack.
@@ -120,9 +160,12 @@ class PresentationScheduler(
     fun openAudioTrack(): Boolean {
         if (audioTrack?.state == AudioTrack.STATE_INITIALIZED) return true
 
+        // FIX 3 — build the track from the current format: a mono source needs a
+        // mono channel mask (a stereo track fed mono PCM plays at double speed).
+        val channelMask = if (channelCount == 1) AudioFormat.CHANNEL_OUT_MONO else AudioFormat.CHANNEL_OUT_STEREO
         val minBufferSize = AudioTrack.getMinBufferSize(
             sampleRateHz,
-            AudioFormat.CHANNEL_OUT_STEREO,
+            channelMask,
             AudioFormat.ENCODING_PCM_16BIT,
         )
         // Use a larger buffer to absorb scheduling jitter (2× the min).
@@ -138,7 +181,7 @@ class PresentationScheduler(
             .setAudioFormat(
                 AudioFormat.Builder()
                     .setSampleRate(sampleRateHz)
-                    .setChannelMask(AudioFormat.CHANNEL_OUT_STEREO)
+                    .setChannelMask(channelMask)
                     .setEncoding(AudioFormat.ENCODING_PCM_16BIT)
                     .build()
             )
@@ -148,7 +191,7 @@ class PresentationScheduler(
 
         return if (audioTrack?.state == AudioTrack.STATE_INITIALIZED) {
             audioTrack?.play()
-            Log.d(TAG, "AudioTrack opened: $sampleRateHz Hz, buffer=${bufferSizeBytes}B")
+            Log.d(TAG, "AudioTrack opened: ${sampleRateHz}Hz/${channelCount}ch, buffer=${bufferSizeBytes}B")
             true
         } else {
             Log.e(TAG, "Failed to initialize AudioTrack")
@@ -161,7 +204,7 @@ class PresentationScheduler(
     /** Start the playback thread. Call after [openAudioTrack]. */
     fun start() {
         if (!running.compareAndSet(false, true)) return
-        val track = audioTrack ?: return
+        if (audioTrack == null) return
         playbackThread = Thread {
             Log.d(TAG, "Playback thread started")
             while (running.get()) {
@@ -197,6 +240,30 @@ class PresentationScheduler(
                     if (delayNanos < -LATE_GRACE_MS * 1_000_000) {
                         // Too late — drop silently.
                         chunksDropped++
+                        consecutiveLateDrops++
+                        // FIX 2a (R1) — a stream of sustained late drops means the
+                        // schedule has fallen permanently behind (drop-cascade: the
+                        // host is delivering stale chunks). Flush the ring buffer and
+                        // re-seed from "now" so playback restarts instead of staying
+                        // silent forever. Throttled to bound thrash on a permanently
+                        // backlogged link.
+                        if (consecutiveLateDrops >= CONSECUTIVE_LATE_DROPS_TO_RESEED &&
+                            System.nanoTime() - lastReseedAtNanos >= RESEED_MIN_INTERVAL_MS * 1_000_000L
+                        ) {
+                            consecutiveLateDrops = 0
+                            lastReseedAtNanos = System.nanoTime()
+                            reseedCount++
+                            Log.w(TAG, "Sustained late drops — flushing and re-seeding from now (recoveries=$reseedCount)")
+                            flush()
+                            seedFromNow()
+                        }
+                        continue
+                    }
+
+                    // FIX 3 — read the track fresh each iteration so a format rebuild
+                    // (new AudioTrack) is picked up instead of writing to a released one.
+                    val track = audioTrack ?: run {
+                        LockSupport.parkNanos(FRAME_MS * 1_000_000)
                         continue
                     }
 
@@ -209,6 +276,7 @@ class PresentationScheduler(
                     )
                     if (written > 0) {
                         chunksPlayed++
+                        consecutiveLateDrops = 0
                     } else {
                         // Non-blocking write couldn't accept data — retry next cycle.
                         buffer[targetNanos] = chunk
@@ -249,6 +317,36 @@ class PresentationScheduler(
     // ── Incoming chunks ─────────────────────────────────────────────
 
     /**
+     * FIX 3 — make the AudioTrack match [chunk]'s format. When the incoming chunk's
+     * sample rate/channel count differ from the current track (44.1kHz or mono
+     * media vs the 48kHz stereo default), rebuild the track so it plays at the
+     * correct pitch and rate. The rebuild is gated by [isFlushing] so the playback
+     * thread parks instead of writing to a released track.
+     */
+    private fun ensureTrackFormat(chunk: AudioChunk) {
+        if (chunk.sampleRateHz == sampleRateHz && chunk.channelCount == channelCount) return
+        Log.w(TAG, "Chunk format differs (${chunk.sampleRateHz}Hz/${chunk.channelCount}ch vs $sampleRateHz/$channelCount) — rebuilding AudioTrack")
+        isFlushing = true
+        try {
+            audioTrack?.apply {
+                try {
+                    pause()
+                    flush()
+                    release()
+                } catch (e: Exception) {
+                    Log.w(TAG, "Error tearing down old AudioTrack", e)
+                }
+            }
+            audioTrack = null
+            sampleRateHz = chunk.sampleRateHz
+            channelCount = chunk.channelCount
+            openAudioTrack()
+        } finally {
+            isFlushing = false
+        }
+    }
+
+    /**
      * Called when an [AudioChunk] arrives from the transport layer.
      * Computes the target playback time and inserts it into the ring buffer.
      *
@@ -257,6 +355,7 @@ class PresentationScheduler(
      * therefore sheds old audio instead of growing memory forever.
      */
     fun onChunkReceived(chunk: AudioChunk) {
+        ensureTrackFormat(chunk)
         val targetNanos = guestPlaybackTimeNanos(chunk.hostTimestampNanos)
         if (buffer.size >= MAX_BUFFERED_CHUNKS) {
             buffer.pollFirstEntry()?.let {

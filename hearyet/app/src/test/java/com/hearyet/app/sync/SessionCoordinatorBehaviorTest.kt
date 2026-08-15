@@ -207,6 +207,8 @@ class SessionCoordinatorBehaviorTest {
             coordinator.onHostAudioChunk(
                 hostTimestampNanos = 1_000_000L,
                 sequenceNumber = 1L,
+                sampleRateHz = 48_000,
+                channelCount = 2,
                 pcmPayload = ByteArray(64),
             )
             awaitCondition("sender thread started") {

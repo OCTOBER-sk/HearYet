@@ -179,8 +179,11 @@ class DriftCorrectionManager(
     // ── Core evaluation (BE §8) ─────────────────────────────────────
 
     private fun evaluate() {
-        val track = audioTrack ?: return
+        // Refresh from the scheduler so a FIX 3 format rebuild (new AudioTrack) is
+        // picked up instead of measuring/releasing a stale, already-released track.
         val sched = scheduler ?: return
+        audioTrack = sched.getAudioTrack()
+        val track = audioTrack ?: return
         val playState = track.playState
 
         // While paused/stopped (permanent focus loss, flush in progress) the playback

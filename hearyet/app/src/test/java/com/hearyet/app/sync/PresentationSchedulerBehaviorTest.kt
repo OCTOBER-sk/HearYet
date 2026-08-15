@@ -74,6 +74,32 @@ class PresentationSchedulerBehaviorTest {
         awaitChunkCount { scheduler.chunksDropped > 0 }
         assertEquals(1L, scheduler.chunksDropped)
         assertEquals(0L, scheduler.chunksPlayed)
+        // A single late chunk is jitter, not a fallen-behind schedule — never a re-seed.
+        assertEquals(0L, scheduler.reseedCount)
+    }
+
+    @Test
+    fun sustainedLateDrops_triggerRecoveryReseed_flushingAndReSeeding() {
+        // FIX 2a (R1) — the drop-cascade: every delivered chunk is stale, so every one
+        // is dropped as too late and the guest stays silent forever. After a sustained
+        // run of late drops the scheduler must flush the ring buffer and re-seed from
+        // "now" so playback restarts instead of remaining permanently behind.
+        assertTrue(scheduler.openAudioTrack())
+        scheduler.start()
+
+        repeat(30) { i ->
+            scheduler.onChunkReceived(chunk(lateTimestamp(30), i.toLong()))
+        }
+
+        awaitChunkCount { scheduler.reseedCount > 0 }
+        assertTrue(
+            "sustained late drops must trigger a recovery re-seed (was reseedCount=${scheduler.reseedCount})",
+            scheduler.reseedCount > 0,
+        )
+        // The recovery re-seed flushed the ring buffer.
+        assertEquals(0, scheduler.bufferSize)
+        // No stale late chunk was ever played.
+        assertEquals(0L, scheduler.chunksPlayed)
     }
 
     @Test
@@ -143,6 +169,32 @@ class PresentationSchedulerBehaviorTest {
         assertEquals(PresentationScheduler.MAX_BUFFERED_CHUNKS, scheduler.bufferSize)
         // Exactly one drop per insert beyond the cap — the oldest chunk each time.
         assertEquals(PresentationScheduler.MAX_BUFFERED_CHUNKS.toLong(), scheduler.chunksDropped)
+    }
+
+    @Test
+    fun onChunkReceived_withDifferentFormat_rebuildsTheAudioTrack() {
+        // FIX 3 — a 44.1kHz mono chunk arriving into a 48kHz stereo scheduler must
+        // rebuild the AudioTrack to the incoming format instead of playing it at the
+        // wrong pitch/rate (44.1kHz stereo fed mono PCM plays at double speed).
+        assertTrue(scheduler.openAudioTrack())
+        assertEquals(48_000, scheduler.sampleRateHz)
+        assertEquals(2, scheduler.channelCount)
+        scheduler.start()
+
+        scheduler.onChunkReceived(
+            AudioChunk(
+                hostTimestampNanos = System.nanoTime() - 100_000_000L,
+                sequenceNumber = 1L,
+                sampleRateHz = 44_100,
+                channelCount = 1,
+                pcmPayload = ByteArray(1_764),
+            ),
+        )
+
+        assertEquals(44_100, scheduler.sampleRateHz)
+        assertEquals(1, scheduler.channelCount)
+        assertTrue(scheduler.isAudioTrackReady)
+        assertEquals(0L, scheduler.chunksDropped)
     }
 
     @Test

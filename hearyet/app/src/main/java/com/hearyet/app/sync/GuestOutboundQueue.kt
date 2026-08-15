@@ -2,6 +2,7 @@ package com.hearyet.app.sync
 
 import com.hearyet.app.feature.player.sync.AudioChunk
 import java.util.concurrent.ConcurrentLinkedDeque
+import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
 
 /**
@@ -28,6 +29,14 @@ class GuestOutboundQueue(
 
     private val deque = ConcurrentLinkedDeque<AudioChunk>()
     private val droppedCount = AtomicInteger(0)
+
+    /**
+     * FIX 2a (R1) — one-shot "re-seed already signaled" flag per full episode.
+     * The host sends the guest a re-seed signal (and clears the backlog) at most
+     * once while the queue stays chronically full, instead of spamming a signal
+     * on every chunk for the whole episode. Reset when the queue drains.
+     */
+    private val reseedSignaled = AtomicBoolean(false)
 
     // ── Producer (SharedAudioRenderer tap) ──────────────────────────
 
@@ -57,6 +66,28 @@ class GuestOutboundQueue(
     /** Reset the dropped-chunk counter (e.g., after a health downgrade is recorded). */
     fun resetDropCount() {
         droppedCount.set(0)
+    }
+
+    /**
+     * FIX 2a (R1) — drop the entire queued backlog. Called when the host signals a
+     * re-seed: a backlog of stale chunks must not keep being delivered after the
+     * guest flushed, or the drop-cascade simply restarts.
+     */
+    fun flush() {
+        while (deque.pollFirst() != null) { /* discard every queued chunk */ }
+        droppedCount.set(0)
+    }
+
+    /**
+     * FIX 2a (R1) — claim the one-shot re-seed signal for this full episode.
+     * Returns true exactly once per episode; the caller re-arms via
+     * [resetReseedSignal] once the queue drains below the chronic threshold.
+     */
+    fun tryClaimReseedSignal(): Boolean = reseedSignaled.compareAndSet(false, true)
+
+    /** FIX 2a (R1) — re-arm the one-shot re-seed signal (queue drained). */
+    fun resetReseedSignal() {
+        reseedSignaled.set(false)
     }
 
     /**

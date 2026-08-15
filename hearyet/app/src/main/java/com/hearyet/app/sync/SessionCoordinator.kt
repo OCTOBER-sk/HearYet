@@ -66,6 +66,12 @@ class SessionCoordinator(
         // guest in ClockSyncing forever. 12s sits inside the 10–15s band used
         // by the other guest timeouts (discovery 15s, host-unreachable 15s).
         private const val HANDSHAKE_TIMEOUT_MS = 12_000L
+
+        // FIX 2b — guest "no audio received" watchdog (R2/R3): if no STREAM chunk
+        // arrives this long while Playing, the schedule is reset so a recovering
+        // host/stream is re-engaged instead of the guest staying silent forever.
+        private const val AUDIO_WATCHDOG_SILENCE_TIMEOUT_MS = 5_000L
+        private const val AUDIO_WATCHDOG_CHECK_MS = 1_000L
     }
 
     // ── Scope ─────────────────────────────────────────────────────────
@@ -84,6 +90,8 @@ class SessionCoordinator(
 
     // C10.4 — Heartbeat (BE §10.1)
     private var heartbeatJob: Job? = null
+    // FIX 2b — guest "no audio received" watchdog (R2/R3)
+    private var audioWatchdogJob: Job? = null
     // Guest-side: last time any message was received from host (nanoTime)
     @Volatile
     private var lastHostMessageNanos: Long = 0L
@@ -815,6 +823,29 @@ class SessionCoordinator(
             }
         }
 
+        // FIX 2d — guest-side abrupt host-loss detection. The transport fires
+        // onDisconnected when the connection drops WITHOUT SessionEnded. Surface an
+        // explicit error immediately instead of waiting out the 15s heartbeat
+        // watchdog, and tear down the guest pipeline (CR4 — previously host-only).
+        transport.onEndpointDisconnected = { endpointId ->
+            if (endpointId == connectedHostEndpointId) {
+                when (_sessionState.value) {
+                    is SessionState.Discovering,
+                    is SessionState.ClockSyncing,
+                    is SessionState.Connected,
+                    is SessionState.Playing,
+                    is SessionState.Paused,
+                    -> {
+                        Log.w(TAG, "Guest: host disconnected abruptly — tearing down")
+                        stopHeartbeat()
+                        teardown()
+                        _sessionState.value = SessionState.Error(SessionError.HOST_UNREACHABLE)
+                    }
+                    else -> { /* Idle/Error/Ended — not a live host-loss condition */ }
+                }
+            }
+        }
+
         transport.startDiscovery()
     }
 
@@ -938,6 +969,11 @@ class SessionCoordinator(
         transport.onAudioChunkReceived = { chunk ->
             presentationScheduler?.onChunkReceived(chunk)
         }
+
+        // FIX 2b (R2/R3) — guest "no audio received" watchdog: if the STREAM leg
+        // stalls (payload never delivered / reader dead) the guest stays silent in
+        // Playing with no error surfaced. Watch for a chunk drought and re-seed.
+        startAudioWatchdog()
 
         // Start drift correction (BE §8 — evaluates every 1-2s, reports every 2s)
         driftCorrectionManager = DriftCorrectionManager(transport)
@@ -1119,6 +1155,14 @@ class SessionCoordinator(
                 presentationScheduler?.seedFromNow()
                 Log.d(TAG, "Guest: AudioTrackChanged — flushed scheduler (${message.trackId})")
             }
+            is ControlMessage.ResyncAudio -> {
+                // FIX 2a (R1) — host detected a chronically-full outbound queue and
+                // cleared its backlog. Flush the ring buffer and re-seed from "now" so
+                // the guest plays fresh chunks instead of staying behind on stale ones.
+                Log.w(TAG, "Guest: host signaled audio re-seed — flushing scheduler")
+                presentationScheduler?.flush()
+                presentationScheduler?.seedFromNow()
+            }
             is ControlMessage.SessionHandshakeAck -> {
                 // BE §4 — host confirmed its sessionId; if it doesn't match the QR
                 // payload's sessionId, reject the connection (name-collision guard).
@@ -1252,10 +1296,18 @@ class SessionCoordinator(
     }
 
     /** BE §6 — distribute a PCM frame to every connected guest's outbound queue. */
-    override fun onHostAudioChunk(hostTimestampNanos: Long, sequenceNumber: Long, pcmPayload: ByteArray) {
+    override fun onHostAudioChunk(
+        hostTimestampNanos: Long,
+        sequenceNumber: Long,
+        sampleRateHz: Int,
+        channelCount: Int,
+        pcmPayload: ByteArray,
+    ) {
         val chunk = com.hearyet.app.feature.player.sync.AudioChunk(
             hostTimestampNanos = hostTimestampNanos,
             sequenceNumber = sequenceNumber,
+            sampleRateHz = sampleRateHz,
+            channelCount = channelCount,
             pcmPayload = pcmPayload,
         )
         // Copy payload per-queue to avoid sharing the byte array
@@ -1276,6 +1328,19 @@ class SessionCoordinator(
                         }
                     }
                 }
+                // FIX 2a (R1) — once per full episode, clear the stale backlog and tell
+                // the guest to flush + re-seed. Without this, the queue sheds its oldest
+                // forever and the guest receives ~4s-stale chunks that its scheduler
+                // drops as too late (self-sustaining silence — the drop-cascade).
+                if (queue.tryClaimReseedSignal()) {
+                    Log.w(TAG, "Guest $endpointId queue chronically full — clearing backlog and signaling re-seed")
+                    queue.flush()
+                    transport.sendControlMessage(endpointId, ControlMessage.ResyncAudio)
+                }
+            } else {
+                // Queue drained below the chronic threshold — re-arm the one-shot signal
+                // so a future full episode signals again.
+                queue.resetReseedSignal()
             }
             queue.enqueue(chunk.copy(pcmPayload = pcmPayload.copyOf()))
         }
@@ -1299,6 +1364,7 @@ class SessionCoordinator(
         // C11 — Unregister from SessionHolder
         SessionHolder.active = null
         stopHeartbeat()
+        stopAudioWatchdog()
         // M-3 — disarm the handshake timeout so a stale timer can never fire
         // into a session that was already torn down or retried.
         handshakeJob?.cancel()
@@ -1425,6 +1491,51 @@ class SessionCoordinator(
     private fun stopHeartbeat() {
         heartbeatJob?.cancel()
         heartbeatJob = null
+    }
+
+    // ═══════════════════════════════════════════════════════════════════
+    // FIX 2b — guest "no audio received" watchdog (R2/R3)
+    // ═══════════════════════════════════════════════════════════════════
+
+    /**
+     * FIX 2b — guest-side watchdog that re-seeds the scheduler when no audio chunk
+     * has arrived while the session is Playing. The STREAM leg can stall silently
+     * (payload never delivered, reader dead — R2/R3) leaving the guest deaf in
+     * Playing with no error. Every second, if no new chunk arrived in the last
+     * [AUDIO_WATCHDOG_SILENCE_TIMEOUT_MS] and the host is still Playing, flush and
+     * re-seed so a recovering host/stream is re-engaged instead of waiting forever.
+     */
+    private fun startAudioWatchdog() {
+        stopAudioWatchdog()
+        audioWatchdogJob = scope.launch {
+            var lastChunksReceived = presentationScheduler?.chunksReceived ?: 0L
+            var lastChunkActivityNanos = System.nanoTime()
+            while (isActive) {
+                delay(AUDIO_WATCHDOG_CHECK_MS)
+                val scheduler = presentationScheduler ?: break
+                val received = scheduler.chunksReceived
+                if (received != lastChunksReceived) {
+                    lastChunksReceived = received
+                    lastChunkActivityNanos = System.nanoTime()
+                }
+                // Only re-seed while the session is actively expecting audio: a paused
+                // host or a not-yet-started session receives no chunks by design.
+                if (_sessionState.value is SessionState.Playing &&
+                    System.nanoTime() - lastChunkActivityNanos >=
+                    AUDIO_WATCHDOG_SILENCE_TIMEOUT_MS * 1_000_000L
+                ) {
+                    Log.w(TAG, "Guest: no audio chunks received for ${AUDIO_WATCHDOG_SILENCE_TIMEOUT_MS}ms — flushing and re-seeding")
+                    scheduler.flush()
+                    scheduler.seedFromNow()
+                    lastChunkActivityNanos = System.nanoTime()
+                }
+            }
+        }
+    }
+
+    private fun stopAudioWatchdog() {
+        audioWatchdogJob?.cancel()
+        audioWatchdogJob = null
     }
 
     // ═══════════════════════════════════════════════════════════════════

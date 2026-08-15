@@ -629,6 +629,8 @@ class PlayerService : MediaSessionService() {
             SessionHolder.active?.onHostAudioChunk(
                 hostTimestampNanos = chunk.hostTimestampNanos,
                 sequenceNumber     = chunk.sequenceNumber,
+                sampleRateHz       = chunk.sampleRateHz,
+                channelCount       = chunk.channelCount,
                 pcmPayload         = chunk.pcmPayload,
             )
         }

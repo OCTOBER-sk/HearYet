@@ -24,6 +24,13 @@ android {
         viewBinding = true
         compose = true
     }
+
+    testOptions {
+        // JVM unit tests hit android.util.Log in the AudioChunk reject paths; the
+        // module has no Robolectric/mockk on its test classpath, so let android.*
+        // calls return defaults instead of throwing "Method not mocked".
+        unitTests.isReturnDefaultValues = true
+    }
 }
 
 kotlin {
