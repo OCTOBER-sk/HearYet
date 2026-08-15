@@ -190,4 +190,46 @@ class SharedAudioRendererTest {
         renderer.queueInput(ByteBuffer.wrap(ByteArray(2_840)))
         assertEquals(0, chunks.size)
     }
+
+    @Test
+    fun frameSizeBytes_usesActualEncodingForSampleWidth() {
+        // FIX 3 — frame size must come from the actual encoding, not a hardcoded
+        // 16-bit width: float PCM (4 bytes/sample) doubles the frame size.
+        assertEquals(3_840, SharedAudioRenderer.frameSizeBytes(48_000, 2, C.ENCODING_PCM_16BIT))
+        assertEquals(7_680, SharedAudioRenderer.frameSizeBytes(48_000, 2, C.ENCODING_PCM_FLOAT))
+        assertEquals(1_764, SharedAudioRenderer.frameSizeBytes(44_100, 1, C.ENCODING_PCM_16BIT))
+        assertEquals(960, SharedAudioRenderer.frameSizeBytes(48_000, 1, C.ENCODING_PCM_8BIT))
+    }
+
+    @Test
+    fun queueInput_floatEncoding_emitsFloatSizedFrames() {
+        // FIX 3 — a float-output renderer must chunk by the float frame size;
+        // the old 16-bit hardcode would emit half-frames of garbage.
+        val renderer = newRenderer()
+        renderer.configure(AudioProcessor.AudioFormat(48_000, 2, C.ENCODING_PCM_FLOAT))
+        val chunks = mutableListOf<AudioChunk>()
+        renderer.onAudioChunk = { chunks.add(it) }
+
+        renderer.queueInput(ByteBuffer.wrap(ByteArray(7_680)))
+
+        assertEquals(1, chunks.size)
+        assertEquals(7_680, chunks[0].pcmPayload.size)
+    }
+
+    @Test
+    fun queueInput_emitsChunksCarryingCaptureFormat() {
+        // FIX 3 — the chunk must carry the host's capture format so the guest can
+        // build a matching AudioTrack (44.1kHz/mono here).
+        val renderer = newRenderer()
+        renderer.configure(AudioProcessor.AudioFormat(44_100, 1, C.ENCODING_PCM_16BIT))
+        val chunks = mutableListOf<AudioChunk>()
+        renderer.onAudioChunk = { chunks.add(it) }
+
+        renderer.queueInput(ByteBuffer.wrap(ByteArray(1_764)))
+
+        assertEquals(1, chunks.size)
+        assertEquals(44_100, chunks[0].sampleRateHz)
+        assertEquals(1, chunks[0].channelCount)
+        assertEquals(1_764, chunks[0].pcmPayload.size)
+    }
 }

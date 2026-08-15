@@ -64,9 +64,18 @@ interface SessionHandle {
      *
      * @param hostTimestampNanos Host capture time from System.nanoTime().
      * @param sequenceNumber Monotonic frame counter for gap detection.
-     * @param pcmPayload Raw 16-bit PCM, 48kHz, interleaved stereo.
+     * @param sampleRateHz Host capture sample rate (Hz) — FIX 3: carried so the
+     *   guest builds its AudioTrack from the actual chunk format.
+     * @param channelCount Host capture channel count (1 = mono, 2 = stereo).
+     * @param pcmPayload Raw interleaved PCM at [sampleRateHz]/[channelCount].
      */
-    fun onHostAudioChunk(hostTimestampNanos: Long, sequenceNumber: Long, pcmPayload: ByteArray)
+    fun onHostAudioChunk(
+        hostTimestampNanos: Long,
+        sequenceNumber: Long,
+        sampleRateHz: Int,
+        channelCount: Int,
+        pcmPayload: ByteArray,
+    )
 
     /**
      * Host-only: a session has become active (media is playing and guests may connect).

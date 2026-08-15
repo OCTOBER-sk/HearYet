@@ -19,6 +19,8 @@ class AudioChunkTest {
     private fun chunk(seq: Long, payloadSize: Int = 3_840): AudioChunk = AudioChunk(
         hostTimestampNanos = 1_000_000_000L + seq,
         sequenceNumber = seq,
+        sampleRateHz = 44_100,
+        channelCount = 1,
         pcmPayload = ByteArray(payloadSize) { (it % 251).toByte() },
     )
 
@@ -29,13 +31,37 @@ class AudioChunkTest {
         AudioChunk.writeFramedChunk(out, original)
         val bytes = out.toByteArray()
 
-        // 1B magic + 1B version + 4B length + 16B header + 3840B payload
-        assertEquals(6 + 16 + 3_840, bytes.size)
+        // 1B magic + 1B version + 4B length + 24B header + 3840B payload
+        assertEquals(6 + 24 + 3_840, bytes.size)
 
         val decoded = AudioChunk.readFramedChunk(ByteArrayInputStream(bytes))!!
         assertArrayEquals(original.pcmPayload, decoded.pcmPayload)
         assertEquals(original.hostTimestampNanos, decoded.hostTimestampNanos)
         assertEquals(original.sequenceNumber, decoded.sequenceNumber)
+        // FIX 3 — the wire must carry the capture format so the guest builds a
+        // matching AudioTrack (44.1kHz/mono here).
+        assertEquals(44_100, decoded.sampleRateHz)
+        assertEquals(1, decoded.channelCount)
+    }
+
+    @Test
+    fun writeFramedChunk_44_1kHzStereoFormat_roundTripsExactly() {
+        val out = ByteArrayOutputStream()
+        val original = AudioChunk(
+            hostTimestampNanos = 42L,
+            sequenceNumber = 9L,
+            sampleRateHz = 48_000,
+            channelCount = 2,
+            pcmPayload = ByteArray(2_000) { 0x11 },
+        )
+        AudioChunk.writeFramedChunk(out, original)
+
+        val decoded = AudioChunk.readFramedChunk(ByteArrayInputStream(out.toByteArray()))!!
+        assertEquals(42L, decoded.hostTimestampNanos)
+        assertEquals(9L, decoded.sequenceNumber)
+        assertEquals(48_000, decoded.sampleRateHz)
+        assertEquals(2, decoded.channelCount)
+        assertArrayEquals(original.pcmPayload, decoded.pcmPayload)
     }
 
     @Test
@@ -60,8 +86,8 @@ class AudioChunkTest {
         AudioChunk.writeFramedChunk(out, chunk(seq = 0))
         val bytes = out.toByteArray()
 
-        // Truncate mid-body (6 prefix + 16 header + 100 of the 3840 payload bytes).
-        val truncated = bytes.copyOf(6 + 16 + 100)
+        // Truncate mid-body (6 prefix + 24 header + 100 of the 3840 payload bytes).
+        val truncated = bytes.copyOf(6 + 24 + 100)
         assertNull(AudioChunk.readFramedChunk(ByteArrayInputStream(truncated)))
     }
 
@@ -71,8 +97,8 @@ class AudioChunkTest {
         val badMagic = byteArrayOf(0x7F.toByte(), 0x01, 0x00, 0x00, 0x00, 0x01)
         assertNull(AudioChunk.readFramedChunk(ByteArrayInputStream(badMagic)))
 
-        // Version mismatch (0x02 instead of 0x01).
-        val badVersion = byteArrayOf(0x48, 0x02, 0x00, 0x00, 0x00, 0x01)
+        // Version mismatch (0x03 — a build newer than this one).
+        val badVersion = byteArrayOf(0x48, 0x03, 0x00, 0x00, 0x00, 0x01)
         assertNull(AudioChunk.readFramedChunk(ByteArrayInputStream(badVersion)))
     }
 

@@ -7,30 +7,43 @@ data class AudioChunk(
     /** Host capture time from System.nanoTime(). */
     val hostTimestampNanos: Long,
     val sequenceNumber: Long,
-    /** Raw 16-bit PCM, 48kHz, interleaved stereo (was opusPayload in original plan). */
+    /** Raw PCM, interleaved, at [sampleRateHz]/[channelCount] (was opusPayload in original plan). */
     val pcmPayload: ByteArray,
+    /**
+     * FIX 3 — host capture sample rate (Hz). Carried on the wire so the guest can
+     * build its AudioTrack to match (a hardcoded 48kHz track plays 44.1kHz media
+     * ~8.8% fast and double-speed mono).
+     */
+    val sampleRateHz: Int = 48000,
+    /** FIX 3 — host capture channel count (1 = mono, 2 = stereo). */
+    val channelCount: Int = 2,
 ) {
     companion object {
         private const val TAG = "AudioChunk"
 
-        /** Header size: 8-bytes timestamp + 8-bytes sequence = 16 bytes. */
-        const val HEADER_SIZE_BYTES: Int = 16
+        /** Header size: 8B timestamp + 8B sequence + 4B sampleRate + 4B channelCount = 24 bytes. */
+        const val HEADER_SIZE_BYTES: Int = 24
 
         /**
          * Serialize this chunk for STREAM transport with a binary header so the
-         * guest can recover [hostTimestampNanos] and [sequenceNumber] for the
-         * scheduling formula (BE §6, §7).
+         * guest can recover [hostTimestampNanos], [sequenceNumber], [sampleRateHz]
+         * and [channelCount] for the scheduling formula and AudioTrack format
+         * (BE §6, §7; FIX 3).
          *
-         * Format: [timestamp: 8B BE][sequenceNumber: 8B BE][pcmPayload: N bytes]
+         * Format: [timestamp: 8B BE][sequenceNumber: 8B BE][sampleRate: 4B BE][channelCount: 4B BE][pcmPayload: N bytes]
          */
         fun encodeToHeaderBytes(
             hostTimestampNanos: Long,
             sequenceNumber: Long,
+            sampleRateHz: Int,
+            channelCount: Int,
             pcmPayload: ByteArray,
         ): ByteArray {
             val buffer = ByteBuffer.allocate(HEADER_SIZE_BYTES + pcmPayload.size)
             buffer.putLong(hostTimestampNanos)
             buffer.putLong(sequenceNumber)
+            buffer.putInt(sampleRateHz)
+            buffer.putInt(channelCount)
             buffer.put(pcmPayload)
             return buffer.array()
         }
@@ -44,11 +57,15 @@ data class AudioChunk(
             val buffer = ByteBuffer.wrap(data)
             val hostTimestampNanos = buffer.getLong()
             val sequenceNumber = buffer.getLong()
+            val sampleRateHz = buffer.getInt()
+            val channelCount = buffer.getInt()
             val pcmPayload = ByteArray(buffer.remaining())
             buffer.get(pcmPayload)
             return AudioChunk(
                 hostTimestampNanos = hostTimestampNanos,
                 sequenceNumber = sequenceNumber,
+                sampleRateHz = sampleRateHz,
+                channelCount = channelCount,
                 pcmPayload = pcmPayload,
             )
         }
@@ -59,8 +76,11 @@ data class AudioChunk(
         /** Magic byte identifying a HearYet STREAM frame (0x48 = 'H'). */
         private const val FRAME_MAGIC: Byte = 0x48
 
-        /** Framing format version — bump only if the wire layout below changes. */
-        private const val FRAME_VERSION: Byte = 0x01
+        /**
+         * Framing format version — bump whenever the wire layout below changes.
+         * 0x02: header grew from 16 to 24 bytes (added sampleRate + channelCount).
+         */
+        private const val FRAME_VERSION: Byte = 0x02
 
         /** Total prefix length: 1B magic + 1B version + 4B record length. */
         private const val FRAME_PREFIX_BYTES = 6
@@ -68,13 +88,19 @@ data class AudioChunk(
         /**
          * Continuous-stream framing (BE §4 — "the continuous PCM audio feed"): each
          * record on the wire is
-         * [1B magic][1B version][4B big-endian Int: record length][16-byte header][PCM payload].
+         * [1B magic][1B version][4B big-endian Int: record length][24-byte header][PCM payload].
          * The length prefix lets the receiver find record boundaries in an
          * otherwise-unbroken byte stream; magic+version make a mismatched build fail
          * loudly (dropped + logged) instead of silently producing garbage audio.
          */
         fun writeFramedChunk(out: java.io.OutputStream, chunk: AudioChunk) {
-            val body = encodeToHeaderBytes(chunk.hostTimestampNanos, chunk.sequenceNumber, chunk.pcmPayload)
+            val body = encodeToHeaderBytes(
+                chunk.hostTimestampNanos,
+                chunk.sequenceNumber,
+                chunk.sampleRateHz,
+                chunk.channelCount,
+                chunk.pcmPayload,
+            )
             val prefix = java.nio.ByteBuffer.allocate(FRAME_PREFIX_BYTES)
                 .put(FRAME_MAGIC)
                 .put(FRAME_VERSION)

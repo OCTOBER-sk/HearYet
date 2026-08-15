@@ -5,9 +5,11 @@ import com.hearyet.app.transport.NearbyTransportManager
 import io.mockk.every
 import io.mockk.mockk
 import java.util.concurrent.atomic.AtomicInteger
+import java.util.concurrent.atomic.AtomicReference
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -223,6 +225,32 @@ class ClockSyncManagerBehaviorTest {
             assertTrue(resultOffsetNanos.isNaN() || resultOffsetNanos == -1.0)
         } finally {
             ClockSyncManager.DEGRADED_MODE_ENABLED = false
+        }
+    }
+
+    @Test
+    fun startBackgroundResync_threadInterruptedDuringSleep_exitsWithoutThrowing() {
+        // CR1 — guest-leave crash regression: after sync converges, the guest runs a
+        // background re-sync thread that sleeps 30–60s. Every teardown calls
+        // stopBackgroundResync() → interrupt(). The old code left that interrupt
+        // uncaught inside Thread.sleep → GlobalExceptionHandler → CrashActivity.
+        val manager = ClockSyncManager(mockk<NearbyTransportManager>(relaxed = true))
+
+        val uncaught = AtomicReference<Throwable?>()
+        val previousHandler = Thread.getDefaultUncaughtExceptionHandler()
+        Thread.setDefaultUncaughtExceptionHandler { _, throwable -> uncaught.set(throwable) }
+        try {
+            manager.startBackgroundResync(HOST_ENDPOINT)
+            // Let the thread reach its 30–60s sleep, then interrupt it the exact way
+            // SessionCoordinator.teardown() does (stopBackgroundResync → interrupt).
+            Thread.sleep(300)
+            manager.stopBackgroundResync()
+            Thread.sleep(300)
+
+            assertNull("interrupted resync thread must exit without crashing (was ${uncaught.get()})", uncaught.get())
+        } finally {
+            Thread.setDefaultUncaughtExceptionHandler(previousHandler)
+            manager.stopBackgroundResync()
         }
     }
 

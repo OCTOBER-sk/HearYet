@@ -228,7 +228,17 @@ class ClockSyncManager(
                     val pollBudgetMs = ((slotEndNanos - System.nanoTime()) / 1_000_000L).coerceAtLeast(0L)
                     val remainingMs = ((deadline - System.nanoTime()) / 1_000_000L).coerceAtLeast(0L)
                     val waitMs = pollBudgetMs.coerceAtMost(remainingMs)
-                    val response = responseQueue.poll(waitMs, TimeUnit.MILLISECONDS)
+                    // Teardown interrupt mid-batch: the poll throws, and an uncaught
+                    // InterruptedException on the background re-sync thread would hit
+                    // GlobalExceptionHandler → CrashActivity. Catch it, restore the
+                    // flag, and exit the batch cleanly (the interrupted check below
+                    // skips the timeout/degraded decision).
+                    val response = try {
+                        responseQueue.poll(waitMs, TimeUnit.MILLISECONDS)
+                    } catch (e: InterruptedException) {
+                        Thread.currentThread().interrupt()
+                        break
+                    }
                     if (response != null) {
                         val t3 = System.nanoTime()
                         // Late responses remain valid: the message carries the original
@@ -265,6 +275,14 @@ class ClockSyncManager(
             // and so a teardown/interrupt leaves no dangling reference.
             pendingSyncResponseQueue = null
             syncInProgress = false
+        }
+
+        // Interrupt-driven exit (teardown): leave cleanly without firing the timeout
+        // callback or resetting isSynced — the session is being torn down and the queue
+        // reference was already nulled in the finally above.
+        if (Thread.currentThread().isInterrupted) {
+            Log.d(TAG, "Sync batch interrupted — exiting without callback")
+            return
         }
 
         // BE §5 — deadline reached without meeting the gate. Degraded entry is only
@@ -324,7 +342,16 @@ class ClockSyncManager(
             while (!Thread.currentThread().isInterrupted) {
                 val delayMs = RESYNC_INTERVAL_MIN_MS +
                     (Math.random() * (RESYNC_INTERVAL_MAX_MS - RESYNC_INTERVAL_MIN_MS)).toLong()
-                Thread.sleep(delayMs)
+                // Guest-leave teardown interrupts this thread while it sleeps for 30–60 s
+                // (stopBackgroundResync → interrupt on every leave after sync converges).
+                // An uncaught InterruptedException would kill the app via
+                // GlobalExceptionHandler → CrashActivity. Exit the loop cleanly instead.
+                try {
+                    Thread.sleep(delayMs)
+                } catch (e: InterruptedException) {
+                    Thread.currentThread().interrupt()
+                    break
+                }
                 if (Thread.currentThread().isInterrupted) break
                 Log.d(TAG, "Background re-sync starting")
                 performSyncBatch(hostEndpointId) { offsetNanos, stddevMs ->

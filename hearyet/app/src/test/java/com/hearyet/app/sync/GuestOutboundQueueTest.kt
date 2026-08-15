@@ -89,4 +89,34 @@ class GuestOutboundQueueTest {
 
         assertEquals(0, queue.totalDropped)
     }
+
+    @Test
+    fun flush_dropsTheEntireBacklog() {
+        // FIX 2a (R1) — when the host signals a re-seed it also clears the backlog;
+        // a stale backlog must not keep being delivered after the guest flushed.
+        val queue = GuestOutboundQueue("endpoint-1")
+        for (seq in 1L..50L) {
+            queue.enqueue(chunk(seq))
+        }
+        assertEquals(50, queue.size)
+
+        queue.flush()
+
+        assertEquals(0, queue.size)
+        assertNull(queue.poll())
+        assertEquals(0, queue.totalDropped)
+    }
+
+    @Test
+    fun tryClaimReseedSignal_isOneShotPerEpisodeUntilReset() {
+        // FIX 2a (R1) — the host must signal a re-seed at most once per full episode
+        // (not on every chunk while the queue stays full), then re-arm on drain.
+        val queue = GuestOutboundQueue("endpoint-1")
+
+        assertTrue(queue.tryClaimReseedSignal())
+        assertFalse("a second claim in the same full episode must be rejected", queue.tryClaimReseedSignal())
+
+        queue.resetReseedSignal()
+        assertTrue("after the queue drains, the signal is re-armed", queue.tryClaimReseedSignal())
+    }
 }
